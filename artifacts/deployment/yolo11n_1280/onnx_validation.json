@@ -1,0 +1,25 @@
+{
+  "model": "/hy-tmp/program/artifacts/deployment/yolo11n_1280/best.onnx",
+  "onnx_checker": "passed",
+  "providers": [
+    "CPUExecutionProvider"
+  ],
+  "input_name": "images",
+  "input_shape": [
+    1,
+    3,
+    1280,
+    1280
+  ],
+  "output_shapes": [
+    [
+      1,
+      10,
+      33600
+    ]
+  ],
+  "raw_inference_mean_ms": 2478.8445614278316,
+  "raw_inference_p95_ms": 2751.9639790058136,
+  "iterations": 5,
+  "note": "Raw graph execution only; preprocessing and NMS are excluded."
+}

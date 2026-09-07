@@ -6,6 +6,7 @@ weights/
 *.pt
 *.onnx
 *.engine
+artifacts/anomaly_baselines/ssn_smoke/
 
 # Python
 __pycache__/
@@ -17,4 +18,3 @@ __pycache__/
 .vscode/
 .DS_Store
 Thumbs.db
-

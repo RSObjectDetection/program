@@ -1,4 +1,6 @@
 numpy<2
+onnx>=1.12,<2
+onnxruntime>=1.19
 Pillow>=9.5
 PyYAML>=6.0
 scikit-learn>=1.3

@@ -36,7 +36,7 @@ After selecting E06a from validation results, its checkpoint was evaluated once 
 |---|---:|---:|---:|---:|---:|---:|---:|
 | YOLO11n, 1280 | 0.967 | 0.920 | 0.975 | 0.489 | 2.59 | 5.35 | 59.6 |
 
-Test per-class mAP50-95: missing hole 0.462, mouse bite 0.528, open circuit 0.497, short 0.443, spur 0.504, and spurious copper 0.499.
+Test per-class mAP50-95: missing hole 0.462, mouse bite 0.528, open circuit 0.497, short 0.443, spur 0.504, spurious copper 0.499.
 
 ## Decisions
 
@@ -48,3 +48,16 @@ Test per-class mAP50-95: missing hole 0.462, mouse bite 0.528, open circuit 0.49
 - Ten images per class materially outperform five (0.303 versus 0.153 mAP50-95), but the full training set remains substantially better.
 
 Latency numbers include preprocessing and postprocessing in the PyTorch runner on an RTX 3090 and should not be interpreted as edge-device TensorRT latency.
+
+## Adapted SuperSimpleNet result
+
+This weak-supervision baseline treats box-free tiles from anomalous images as local pseudo-normal samples and converts VOC boxes to coarse rectangular masks. It is not comparable to a standard normal-only anomaly-detection protocol.
+
+| Split | Tile AUROC | Tile AP | Pixel AUROC@64 | Pixel AP@64 | Best pixel F1@64 |
+|---|---:|---:|---:|---:|---:|
+| Validation | 0.821 | 0.747 | 0.940 | 0.470 | 0.500 |
+| Test | 0.900 | 0.797 | 0.960 | 0.419 | 0.470 |
+
+The ResNet-18 variant has 4.56M parameters and measured 4.03ms per 256-pixel tile on the RTX 3090. The test heat-map threshold was not tuned on test data; the reported best-test F1 is descriptive only.
+
+Validation-only calibration selects tile threshold 0.65 and pixel threshold 0.66. At these frozen thresholds, test tile F1 is 0.663 and test pixel F1@64 is 0.439.

@@ -1,0 +1,33 @@
+{
+  "threshold_source": "validation only",
+  "tile_threshold": 0.65,
+  "pixel_threshold": 0.66,
+  "validation": {
+    "tile": {
+      "positive_prevalence": 0.25573770491803277,
+      "auroc": 0.8207197595447872,
+      "average_precision": 0.7468319161592254,
+      "f1": 0.7166666666666667
+    },
+    "pixel_64": {
+      "positive_prevalence": 0.005006183561731557,
+      "auroc": 0.9399189068616322,
+      "average_precision": 0.46964392523615306,
+      "f1": 0.499597297418229
+    }
+  },
+  "test_at_frozen_validation_thresholds": {
+    "tile": {
+      "positive_prevalence": 0.23666666666666666,
+      "auroc": 0.9002986038501752,
+      "average_precision": 0.7967225584406572,
+      "f1": 0.6634768740031898
+    },
+    "pixel_64": {
+      "positive_prevalence": 0.0047239583333333335,
+      "auroc": 0.9595066647338266,
+      "average_precision": 0.41921578377094554,
+      "f1": 0.43914159699822264
+    }
+  }
+}

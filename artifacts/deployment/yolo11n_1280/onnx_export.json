@@ -1,0 +1,12 @@
+{
+  "source_checkpoint": "/hy-tmp/program/runs/detect/e06a_group_yolo11n_1280_default/weights/best.pt",
+  "artifact": "/hy-tmp/program/artifacts/deployment/yolo11n_1280/best.onnx",
+  "format": "onnx",
+  "image_size": 1280,
+  "batch": 1,
+  "dynamic": false,
+  "half": false,
+  "simplified": false,
+  "size_mb": 10.560149192810059,
+  "sha256": "d9e1d9f546f808c528b1b2c44da4bacd0f1b200327f630335f292c89bddf7bdf"
+}

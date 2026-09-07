@@ -20,6 +20,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--imgsz", type=int, default=1280)
     parser.add_argument("--device", default="0")
     parser.add_argument("--half", action="store_true")
+    parser.add_argument("--simplify", action="store_true")
     return parser.parse_args()
 
 
@@ -40,7 +41,7 @@ def main() -> None:
             imgsz=args.imgsz,
             batch=1,
             dynamic=False,
-            simplify=True,
+            simplify=args.simplify,
             half=args.half,
             device=args.device,
         )
@@ -56,6 +57,7 @@ def main() -> None:
         "batch": 1,
         "dynamic": False,
         "half": args.half,
+        "simplified": args.simplify,
         "size_mb": destination.stat().st_size / (1024 * 1024),
         "sha256": sha256(destination),
     }

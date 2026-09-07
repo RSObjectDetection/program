@@ -13,7 +13,7 @@ Because the archive contains bounding-box-labelled defect images but no normal-o
 
 ## Current result
 
-The selected YOLO11n model uses a 1280-pixel input and a PCB-template group holdout. On the untouched 120-image test split it reaches mAP50 **0.975**, mAP50-95 **0.489**, recall **0.920**, with 2.59M parameters and a 5.35MB checkpoint. The random-split score is retained only as a leakage diagnostic.
+The selected YOLO11n model uses a 1280-pixel input and a PCB-template group holdout. On the untouched 120-image test split it reaches mAP50 **0.975**, mAP50-95 **0.489**, recall **0.920**, with 2.59M parameters and a 5.35MB checkpoint. The adapted SuperSimpleNet baseline reaches test tile AUROC **0.900** and tile AP **0.797** with 4.56M parameters, under the pseudo-normal limitation above. The random-split score is retained only as a leakage diagnostic.
 
 ## Reproduce
 
@@ -46,10 +46,10 @@ git -C /hy-tmp/SuperSimpleNet apply /hy-tmp/program/patches/supersimplenet_py38.
 python scripts/run_supersimplenet_pcb.py \
   --manifest /hy-tmp/data/pcb_ssn_tiles_512/manifest.csv \
   --official-repo /hy-tmp/SuperSimpleNet \
-  --output-dir artifacts/anomaly_baselines/supersimplenet_box_tiles_r18 \
-  --image-size 512 --epochs 30 --batch 16
+  --output-dir artifacts/anomaly_baselines/supersimplenet_box_tiles_r18_256 \
+  --image-size 256 --epochs 15 --batch 32 --eval-every 3
 ```
 
 Every experiment writes its configuration, logs, metrics and model metadata under `runs/`. Large model weights and the raw dataset are deliberately excluded from Git.
 
-See [docs/EXPERIMENT_PLAN.md](docs/EXPERIMENT_PLAN.md), [docs/EXPERIMENT_RESULTS.md](docs/EXPERIMENT_RESULTS.md), and [docs/LITERATURE_REVIEW_2024_2025.md](docs/LITERATURE_REVIEW_2024_2025.md).
+See [docs/EXPERIMENT_PLAN.md](docs/EXPERIMENT_PLAN.md), [docs/EXPERIMENT_RESULTS.md](docs/EXPERIMENT_RESULTS.md), [docs/ANOMALY_BASELINES.md](docs/ANOMALY_BASELINES.md), [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md), and [docs/LITERATURE_REVIEW_2024_2025.md](docs/LITERATURE_REVIEW_2024_2025.md).

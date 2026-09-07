@@ -30,7 +30,7 @@ Two risks dominate the evaluation:
 | E06a | Resolution optimization | PCB-template holdout | YOLO11n | 1280 | full, default augmentation |
 | E06b | Augmentation optimization | PCB-template holdout | YOLO11n | 1280 | full, reduced scale/color/Mosaic |
 | E07 | Tiny-object head | PCB-template holdout | YOLO11n-P2 | 1024 | full |
-| E08 | Box-derived anomaly baseline | PCB-template holdout | SuperSimpleNet, ResNet-18 | 512 tiles | pseudo-normal + coarse masks |
+| E08 | Box-derived anomaly baseline | PCB-template holdout | SuperSimpleNet, ResNet-18 | 512 tiles resized to 256 | pseudo-normal + coarse masks |
 
 E00 is diagnostic only and must not be quoted as the production estimate. E01 is the baseline used for decisions.
 
@@ -47,6 +47,7 @@ E00 is diagnostic only and must not be quoted as the production estimate. E01 is
 - E00 confirms a modest random-split optimism gap and is diagnostic only.
 - E01 establishes the honest 1024 baseline.
 - E02 shows that 640 input removes too much tiny-defect information for only a small latency gain; it is rejected.
+- E03 is deferred: the nano model already meets the strict lightweight target, and higher resolution gives a clearer gain than increasing capacity. It remains an optional capacity ablation rather than a production candidate.
 - E06a improves recall materially with a modest latency increase and is the current production candidate.
 - E04b is rejected: freezing the first ten modules reduces 5-shot mAP50-95 from 0.153 to 0.118.
 - E05 reaches 0.303 mAP50-95 with 10 images per class, nearly twice the 5-shot value but still below full-data training.
@@ -54,6 +55,7 @@ E00 is diagnostic only and must not be quoted as the production estimate. E01 is
 - E07 is rejected: its P2 head transfers fewer pretrained parameters and reaches 0.445 mAP50-95, below the ordinary nano model.
 - The frozen E06a checkpoint reaches 0.975 mAP50, 0.489 mAP50-95 and 0.920 recall on the untouched test split.
 - E08 evaluates whether local box-free regions can substitute for normal images. Its scores must be reported with the pseudo-normal/coarse-mask qualification.
+- E08 completes with test tile AUROC 0.900, tile AP 0.797, coarse-mask pixel AUROC 0.960 and pixel AP 0.419. It is useful as a weak baseline, but its assumptions prevent a direct claim about full-image anomaly detection.
 
 ## 6. Follow-up normal-only anomaly detection
 

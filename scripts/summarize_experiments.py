@@ -30,6 +30,21 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--markdown-output", type=Path, default=Path("docs/EXPERIMENT_RESULTS.md")
     )
+    parser.add_argument(
+        "--final-test",
+        type=Path,
+        default=Path("artifacts/final_test/yolo11n_1280_default_final_test/test_summary.json"),
+    )
+    parser.add_argument(
+        "--anomaly-summary",
+        type=Path,
+        default=Path("artifacts/anomaly_baselines/supersimplenet_box_tiles_r18_256/experiment_summary.json"),
+    )
+    parser.add_argument(
+        "--anomaly-thresholds",
+        type=Path,
+        default=Path("artifacts/anomaly_baselines/supersimplenet_box_tiles_r18_256/threshold_calibration.json"),
+    )
     return parser.parse_args()
 
 
@@ -97,6 +112,68 @@ def main() -> None:
     for row in rows:
         values = " | ".join(f"{row[f'map_{name}']:.3f}" for name in CLASSES)
         lines.append(f"| {row['experiment']} | {values} |")
+    if args.final_test.exists():
+        final = json.loads(args.final_test.read_text(encoding="utf-8"))
+        metrics = final["metrics"]
+        latency = final["latency"]
+        lines.extend(
+            [
+                "",
+                "## Frozen-model test result",
+                "",
+                "After selecting E06a from validation results, its checkpoint was evaluated once on the untouched PCB-template test split (groups 11 and 12; 120 images and 606 boxes).",
+                "",
+                "| Model | Precision | Recall | mAP50 | mAP50-95 | Params (M) | Size (MB) | Mean latency (ms) |",
+                "|---|---:|---:|---:|---:|---:|---:|---:|",
+                f"| YOLO11n, 1280 | {metrics['precision']:.3f} | {metrics['recall']:.3f} | {metrics['map50']:.3f} | {metrics['map50_95']:.3f} | {final['parameter_count'] / 1_000_000:.2f} | {final['model_size_mb']:.2f} | {latency['mean_ms']:.1f} |",
+                "",
+                "Test per-class mAP50-95: "
+                + ", ".join(
+                    f"{name.replace('_', ' ')} {value:.3f}"
+                    for name, value in zip(CLASSES, metrics["per_class_map50_95"])
+                )
+                + ".",
+                "",
+                "## Decisions",
+                "",
+                "- Use E06a as the current detector baseline. Compared with 1024 input, it improves validation recall from 0.851 to 0.910 with the same 2.59M-parameter model.",
+                "- Reject 640 input: mAP50-95 falls from 0.473 to 0.317 for only about a 9% reduction in measured end-to-end latency.",
+                "- Reject the tuned-augmentation run as the primary checkpoint: its 0.001 mAP50-95 gain is outweighed by a 0.060 recall drop.",
+                "- Reject the custom P2 head in its present form. Only part of the pretrained detection head transfers, and accuracy regresses.",
+                "- Do not freeze ten modules in the 5-shot setting. It reduces mAP50-95 from 0.153 to 0.118.",
+                "- Ten images per class materially outperform five (0.303 versus 0.153 mAP50-95), but the full training set remains substantially better.",
+                "",
+                "Latency numbers include preprocessing and postprocessing in the PyTorch runner on an RTX 3090 and should not be interpreted as edge-device TensorRT latency.",
+            ]
+        )
+    if args.anomaly_summary.exists():
+        anomaly = json.loads(args.anomaly_summary.read_text(encoding="utf-8"))
+        val = anomaly["validation"]
+        test = anomaly["test"]
+        lines.extend(
+            [
+                "",
+                "## Adapted SuperSimpleNet result",
+                "",
+                "This weak-supervision baseline treats box-free tiles from anomalous images as local pseudo-normal samples and converts VOC boxes to coarse rectangular masks. It is not comparable to a standard normal-only anomaly-detection protocol.",
+                "",
+                "| Split | Tile AUROC | Tile AP | Pixel AUROC@64 | Pixel AP@64 | Best pixel F1@64 |",
+                "|---|---:|---:|---:|---:|---:|",
+                f"| Validation | {val['tile_auroc']:.3f} | {val['tile_ap']:.3f} | {val['pixel_auroc_64']:.3f} | {val['pixel_ap_64']:.3f} | {val['pixel_best_f1_64']:.3f} |",
+                f"| Test | {test['tile_auroc']:.3f} | {test['tile_ap']:.3f} | {test['pixel_auroc_64']:.3f} | {test['pixel_ap_64']:.3f} | {test['pixel_best_f1_64']:.3f} |",
+                "",
+                f"The ResNet-18 variant has {anomaly['parameter_count'] / 1_000_000:.2f}M parameters and measured {anomaly['latency_mean_ms_per_tile']:.2f}ms per 256-pixel tile on the RTX 3090. The test heat-map threshold was not tuned on test data; the reported best-test F1 is descriptive only.",
+            ]
+        )
+        if args.anomaly_thresholds.exists():
+            calibrated = json.loads(args.anomaly_thresholds.read_text(encoding="utf-8"))
+            fixed = calibrated["test_at_frozen_validation_thresholds"]
+            lines.extend(
+                [
+                    "",
+                    f"Validation-only calibration selects tile threshold {calibrated['tile_threshold']:.2f} and pixel threshold {calibrated['pixel_threshold']:.2f}. At these frozen thresholds, test tile F1 is {fixed['tile']['f1']:.3f} and test pixel F1@64 is {fixed['pixel_64']['f1']:.3f}.",
+                ]
+            )
     args.markdown_output.parent.mkdir(parents=True, exist_ok=True)
     args.markdown_output.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"Wrote {args.csv_output} and {args.markdown_output}")

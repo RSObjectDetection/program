@@ -280,7 +280,7 @@ def main() -> None:
             torch.cuda.synchronize()
         timings.append((time.perf_counter() - started) * 1000)
     summary = {
-        "name": "supersimplenet_box_tiles_r18",
+        "name": f"supersimplenet_box_tiles_r18_{args.image_size}",
         "data_assumption": "normal tiles are box-free regions from anomalous images",
         "mask_assumption": "VOC boxes converted to coarse rectangular masks",
         "backbone": args.backbone,
