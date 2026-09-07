@@ -52,4 +52,4 @@ python scripts/run_supersimplenet_pcb.py \
 
 Every experiment writes its configuration, logs, metrics and model metadata under `runs/`. Large model weights and the raw dataset are deliberately excluded from Git.
 
-See [docs/EXPERIMENT_PLAN.md](docs/EXPERIMENT_PLAN.md), [docs/EXPERIMENT_RESULTS.md](docs/EXPERIMENT_RESULTS.md), [docs/ANOMALY_BASELINES.md](docs/ANOMALY_BASELINES.md), [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md), and [docs/LITERATURE_REVIEW_2024_2025.md](docs/LITERATURE_REVIEW_2024_2025.md).
+See [docs/EXPERIMENT_PLAN.md](docs/EXPERIMENT_PLAN.md), [docs/EXPERIMENT_RESULTS.md](docs/EXPERIMENT_RESULTS.md), [docs/ANOMALY_BASELINES.md](docs/ANOMALY_BASELINES.md), [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md), [docs/LITERATURE_REVIEW_2024_2025.md](docs/LITERATURE_REVIEW_2024_2025.md), and [docs/FEW_SHOT_SUPERVISED_2024_2026.md](docs/FEW_SHOT_SUPERVISED_2024_2026.md).
