@@ -25,8 +25,12 @@ Two risks dominate the evaluation:
 | E02 | Resolution ablation | PCB-template holdout | YOLO11n | 640 | full |
 | E03 | Capacity ablation | PCB-template holdout | YOLO11s | 1024 | full |
 | E04 | Extreme few-shot | PCB-template holdout | YOLO11n | 1024 | 5 images/class |
+| E04b | Frozen-backbone few-shot | PCB-template holdout | YOLO11n, freeze 10 | 1024 | 5 images/class |
 | E05 | Few-shot | PCB-template holdout | YOLO11n | 1024 | 10 images/class |
-| E06 | Tiny-defect optimization | PCB-template holdout | YOLO11n | 1280 | full, tuned augmentation |
+| E06a | Resolution optimization | PCB-template holdout | YOLO11n | 1280 | full, default augmentation |
+| E06b | Augmentation optimization | PCB-template holdout | YOLO11n | 1280 | full, reduced scale/color/Mosaic |
+| E07 | Tiny-object head | PCB-template holdout | YOLO11n-P2 | 1024 | full |
+| E08 | Box-derived anomaly baseline | PCB-template holdout | SuperSimpleNet, ResNet-18 | 512 tiles | pseudo-normal + coarse masks |
 
 E00 is diagnostic only and must not be quoted as the production estimate. E01 is the baseline used for decisions.
 
@@ -38,7 +42,19 @@ E00 is diagnostic only and must not be quoted as the production estimate. E01 is
 4. If a class has low recall, inspect its box-size distribution and confusion matrix before using class weights or oversampling.
 5. Select thresholds using validation data only. The held-out test split remains untouched until a configuration is frozen.
 
-## 5. Follow-up normal-only anomaly detection
+## 5. Execution status and decisions
 
-When matching normal images become available, add a second branch using EfficientAD-S or SuperSimpleNet. The supervised detector will identify the six known defects, while the anomaly branch will flag unknown contamination, scratches and process drift. Geometric displacement should remain a separate registration/tolerance measurement rather than being inferred only from an anomaly score.
+- E00 confirms a modest random-split optimism gap and is diagnostic only.
+- E01 establishes the honest 1024 baseline.
+- E02 shows that 640 input removes too much tiny-defect information for only a small latency gain; it is rejected.
+- E06a improves recall materially with a modest latency increase and is the current production candidate.
+- E04b is rejected: freezing the first ten modules reduces 5-shot mAP50-95 from 0.153 to 0.118.
+- E05 reaches 0.303 mAP50-95 with 10 images per class, nearly twice the 5-shot value but still below full-data training.
+- E06b is rejected as the primary model: mAP50-95 changes only from 0.491 to 0.492 while recall falls from 0.910 to 0.850.
+- E07 is rejected: its P2 head transfers fewer pretrained parameters and reaches 0.445 mAP50-95, below the ordinary nano model.
+- The frozen E06a checkpoint reaches 0.975 mAP50, 0.489 mAP50-95 and 0.920 recall on the untouched test split.
+- E08 evaluates whether local box-free regions can substitute for normal images. Its scores must be reported with the pseudo-normal/coarse-mask qualification.
 
+## 6. Follow-up normal-only anomaly detection
+
+The present E08 branch is an adapted SuperSimpleNet baseline because it can consume positive coarse masks together with pseudo-normal regions. Standard EfficientAD is intentionally not reported: its student-teacher training assumes known-good images, so using the supplied anomaly-only images as normal would invalidate the objective. When matching good chips become available, train EfficientAD-S and the standard normal-only SuperSimpleNet protocol. The supervised detector should identify the six known defects, while the anomaly branch flags unknown contamination, scratches and process drift. Geometric displacement should remain a separate registration/tolerance measurement rather than being inferred only from an anomaly score.

@@ -1,0 +1,100 @@
+{
+  "dataset_root": "/hy-tmp/data/raw_deeppcb",
+  "images": 693,
+  "annotations": 693,
+  "image_sizes": {
+    "3034x1586": 120,
+    "3056x2464": 120,
+    "2544x2156": 60,
+    "2868x2316": 61,
+    "2904x1921": 60,
+    "2759x2154": 60,
+    "2775x2159": 60,
+    "2240x2016": 32,
+    "2282x2248": 60,
+    "2529x2530": 60
+  },
+  "folder_counts": {
+    "Missing_hole": 115,
+    "Mouse_bite": 115,
+    "Open_circuit": 116,
+    "Short": 116,
+    "Spur": 115,
+    "Spurious_copper": 116
+  },
+  "template_group_counts": {
+    "01": 120,
+    "04": 120,
+    "05": 60,
+    "06": 61,
+    "07": 60,
+    "08": 60,
+    "09": 60,
+    "10": 32,
+    "11": 60,
+    "12": 60
+  },
+  "classes": {
+    "missing_hole": {
+      "images": 115,
+      "boxes": 497,
+      "boxes_per_image": 4.321739130434783,
+      "area_ratio_median": 0.0006910106030068976,
+      "area_ratio_p10": 0.00047212647208311355,
+      "area_ratio_p90": 0.001377171177184277,
+      "width_ratio_median": 0.023196810438564697,
+      "height_ratio_median": 0.029684601113172542
+    },
+    "mouse_bite": {
+      "images": 115,
+      "boxes": 492,
+      "boxes_per_image": 4.278260869565218,
+      "area_ratio_median": 0.000609620440802923,
+      "area_ratio_p10": 0.0003328229909057894,
+      "area_ratio_p90": 0.0010670698425867301,
+      "width_ratio_median": 0.022342342342342343,
+      "height_ratio_median": 0.028003246753246752
+    },
+    "open_circuit": {
+      "images": 116,
+      "boxes": 482,
+      "boxes_per_image": 4.155172413793103,
+      "area_ratio_median": 0.00040791639120588526,
+      "area_ratio_p10": 0.00022300054420587958,
+      "area_ratio_p90": 0.0007844347375873701,
+      "width_ratio_median": 0.01869528559973586,
+      "height_ratio_median": 0.02271294279491001
+    },
+    "short": {
+      "images": 116,
+      "boxes": 491,
+      "boxes_per_image": 4.232758620689655,
+      "area_ratio_median": 0.0010282890375331475,
+      "area_ratio_p10": 0.0005658866752618172,
+      "area_ratio_p90": 0.0020187161591186504,
+      "width_ratio_median": 0.029360210341805432,
+      "height_ratio_median": 0.03540587219343696
+    },
+    "spur": {
+      "images": 115,
+      "boxes": 488,
+      "boxes_per_image": 4.243478260869566,
+      "area_ratio_median": 0.0007833396736782895,
+      "area_ratio_p10": 0.0004166938129934543,
+      "area_ratio_p90": 0.0014760266085600906,
+      "width_ratio_median": 0.02692416954830873,
+      "height_ratio_median": 0.029684601113172542
+    },
+    "spurious_copper": {
+      "images": 116,
+      "boxes": 503,
+      "boxes_per_image": 4.336206896551724,
+      "area_ratio_median": 0.0008939741037934646,
+      "area_ratio_p10": 0.0005094724954798873,
+      "area_ratio_p90": 0.0014494040271904323,
+      "width_ratio_median": 0.024864864864864864,
+      "height_ratio_median": 0.03467843631778058
+    }
+  },
+  "issues": []
+}

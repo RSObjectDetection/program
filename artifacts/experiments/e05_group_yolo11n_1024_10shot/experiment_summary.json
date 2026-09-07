@@ -1,0 +1,63 @@
+{
+  "name": "e05_group_yolo11n_1024_10shot",
+  "data": "/hy-tmp/data/pcb_yolo/group_holdout_10shot/data.yaml",
+  "model": "/hy-tmp/weights/yolo11n.pt",
+  "pretrained_weights": null,
+  "imgsz": 1024,
+  "epochs": 100,
+  "batch": 8,
+  "seed": 20260907,
+  "eval_split": "val",
+  "freeze": null,
+  "augmentation": {
+    "degrees": 0.0,
+    "translate": 0.1,
+    "scale": 0.5,
+    "fliplr": 0.5,
+    "flipud": 0.0,
+    "hsv_h": 0.015,
+    "hsv_s": 0.7,
+    "hsv_v": 0.4,
+    "mosaic": 1.0,
+    "mixup": 0.0,
+    "multi_scale": 0.0
+  },
+  "hostname": "I2af986cb7900c0102f",
+  "python": "3.8.10",
+  "torch": "2.0.0+cu118",
+  "cuda_available": true,
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "git_revision": "d7713e83fa891e25a8b0d891ad5576c7b539ab4b",
+  "started_at_unix": 1788771606.9062836,
+  "completed_at_unix": 1788771843.0014763,
+  "test_metrics": {
+    "map50_95": 0.30321232118651686,
+    "map50": 0.6115381651238981,
+    "map75": 0.2514332839270636,
+    "per_class_map50_95": [
+      0.5195106051469532,
+      0.22299539726066647,
+      0.16713586833628752,
+      0.1884126246507991,
+      0.2807227950649479,
+      0.4404966366594471
+    ],
+    "fitness": 0.30321232118651686
+  },
+  "validation_results_dict": {
+    "metrics/precision(B)": 0.7090365396186703,
+    "metrics/recall(B)": 0.600662207963179,
+    "metrics/mAP50(B)": 0.6115381651238981,
+    "metrics/mAP50-95(B)": 0.30321232118651686,
+    "fitness": 0.30321232118651686
+  },
+  "latency": {
+    "mean_ms": 76.71818241477013,
+    "p50_ms": 78.45921814441681,
+    "p95_ms": 90.2344286441803,
+    "fps_from_mean": 13.03471965216261,
+    "peak_gpu_memory_mb": 323.265625
+  },
+  "parameter_count": 2591010,
+  "best_model_size_mb": 5.291542053222656
+}

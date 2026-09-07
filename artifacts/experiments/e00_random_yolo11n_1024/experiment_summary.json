@@ -1,0 +1,48 @@
+{
+  "name": "e00_random_yolo11n_1024",
+  "data": "/hy-tmp/data/pcb_yolo/random_stratified/data.yaml",
+  "model": "/hy-tmp/weights/yolo11n.pt",
+  "imgsz": 1024,
+  "epochs": 50,
+  "batch": 8,
+  "seed": 20260907,
+  "eval_split": "val",
+  "hostname": "I2af986cb7900c0102f",
+  "python": "3.8.10",
+  "torch": "2.0.0+cu118",
+  "cuda_available": true,
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "git_revision": "d7713e83fa891e25a8b0d891ad5576c7b539ab4b",
+  "started_at_unix": 1788766164.5774052,
+  "completed_at_unix": 1788766637.5619795,
+  "test_metrics": {
+    "map50_95": 0.5162230378184087,
+    "map50": 0.9240861183699258,
+    "map75": 0.5400477789150594,
+    "per_class_map50_95": [
+      0.6100133774695824,
+      0.4960240981369629,
+      0.552069600330477,
+      0.4966507727629105,
+      0.3892415373948231,
+      0.5533388408156961
+    ],
+    "fitness": 0.5162230378184087
+  },
+  "validation_results_dict": {
+    "metrics/precision(B)": 0.9616486368718951,
+    "metrics/recall(B)": 0.8823811858645612,
+    "metrics/mAP50(B)": 0.9240861183699258,
+    "metrics/mAP50-95(B)": 0.5162230378184087,
+    "fitness": 0.5162230378184087
+  },
+  "latency": {
+    "mean_ms": 64.29846212267876,
+    "p50_ms": 64.44775313138962,
+    "p95_ms": 67.48748943209648,
+    "fps_from_mean": 15.552471505337751,
+    "peak_gpu_memory_mb": 295.31884765625
+  },
+  "parameter_count": 2591010,
+  "best_model_size_mb": 5.297340393066406
+}
