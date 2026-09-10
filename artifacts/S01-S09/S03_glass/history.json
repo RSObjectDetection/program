@@ -1,0 +1,166 @@
+[
+  {
+    "epoch": 1,
+    "train_loss": 1.4017345161437988,
+    "epoch_seconds": 64.49201846704818
+  },
+  {
+    "epoch": 2,
+    "train_loss": 1.1663334445953368,
+    "epoch_seconds": 59.31463114405051
+  },
+  {
+    "epoch": 3,
+    "train_loss": 1.1150358667373657,
+    "epoch_seconds": 60.38704714202322,
+    "validation_top2": {
+      "threshold": 0.68,
+      "auroc": 0.8888888888888888,
+      "auprc": 0.980993681222041,
+      "f1": 0.9368421052631579,
+      "precision_ng": 0.89,
+      "recall_ng": 0.9888888888888889,
+      "specificity_ok": 0.26666666666666666,
+      "false_positive_rate_ok": 0.7333333333333333,
+      "balanced_accuracy": 0.6277777777777778,
+      "confusion": {
+        "tn": 4,
+        "fp": 11,
+        "fn": 1,
+        "tp": 89
+      },
+      "per_defect_recall": {
+        "missing_hole": 0.9333333333333333,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    }
+  },
+  {
+    "epoch": 4,
+    "train_loss": 1.1014825673103332,
+    "epoch_seconds": 77.18470061616972
+  },
+  {
+    "epoch": 5,
+    "train_loss": 1.082200900554657,
+    "epoch_seconds": 72.60414218599908
+  },
+  {
+    "epoch": 6,
+    "train_loss": 1.0778303775787355,
+    "epoch_seconds": 71.1996782629285,
+    "validation_top2": {
+      "threshold": 0.66,
+      "auroc": 0.8992592592592592,
+      "auprc": 0.9833192080718309,
+      "f1": 0.9375,
+      "precision_ng": 0.8823529411764706,
+      "recall_ng": 1.0,
+      "specificity_ok": 0.2,
+      "false_positive_rate_ok": 0.8,
+      "balanced_accuracy": 0.6,
+      "confusion": {
+        "tn": 3,
+        "fp": 12,
+        "fn": 0,
+        "tp": 90
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    }
+  },
+  {
+    "epoch": 7,
+    "train_loss": 1.0709937553405762,
+    "epoch_seconds": 72.51025508204475
+  },
+  {
+    "epoch": 8,
+    "train_loss": 1.055949770450592,
+    "epoch_seconds": 74.51037896890193
+  },
+  {
+    "epoch": 9,
+    "train_loss": 1.0604846310615539,
+    "epoch_seconds": 67.9909117531497,
+    "validation_top2": {
+      "threshold": 0.6757271587848663,
+      "auroc": 0.9518518518518518,
+      "auprc": 0.9921001073383802,
+      "f1": 0.9621621621621621,
+      "precision_ng": 0.9368421052631579,
+      "recall_ng": 0.9888888888888889,
+      "specificity_ok": 0.6,
+      "false_positive_rate_ok": 0.4,
+      "balanced_accuracy": 0.7944444444444445,
+      "confusion": {
+        "tn": 9,
+        "fp": 6,
+        "fn": 1,
+        "tp": 89
+      },
+      "per_defect_recall": {
+        "missing_hole": 0.9333333333333333,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    }
+  },
+  {
+    "epoch": 10,
+    "train_loss": 1.0505088729858398,
+    "epoch_seconds": 68.98362404317595
+  },
+  {
+    "epoch": 11,
+    "train_loss": 1.0471633195877075,
+    "epoch_seconds": 67.68999909097329
+  },
+  {
+    "epoch": 12,
+    "train_loss": 1.0403005843162536,
+    "epoch_seconds": 67.90719364094548,
+    "validation_top2": {
+      "threshold": 0.61,
+      "auroc": 0.9985185185185186,
+      "auprc": 0.9997584541062801,
+      "f1": 0.9944134078212291,
+      "precision_ng": 1.0,
+      "recall_ng": 0.9888888888888889,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 0.9944444444444445,
+      "confusion": {
+        "tn": 15,
+        "fp": 0,
+        "fn": 1,
+        "tp": 89
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 0.9333333333333333,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    }
+  }
+]

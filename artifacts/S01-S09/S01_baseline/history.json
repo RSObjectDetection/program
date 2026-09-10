@@ -1,0 +1,166 @@
+[
+  {
+    "epoch": 1,
+    "train_loss": 1.4017345161437988,
+    "epoch_seconds": 60.12637008796446
+  },
+  {
+    "epoch": 2,
+    "train_loss": 1.1663334445953368,
+    "epoch_seconds": 62.96478238096461
+  },
+  {
+    "epoch": 3,
+    "train_loss": 1.1150358667373657,
+    "epoch_seconds": 75.90193689195439,
+    "validation_top2": {
+      "threshold": 0.68,
+      "auroc": 0.8888888888888888,
+      "auprc": 0.980993681222041,
+      "f1": 0.9368421052631579,
+      "precision_ng": 0.89,
+      "recall_ng": 0.9888888888888889,
+      "specificity_ok": 0.26666666666666666,
+      "false_positive_rate_ok": 0.7333333333333333,
+      "balanced_accuracy": 0.6277777777777778,
+      "confusion": {
+        "tn": 4,
+        "fp": 11,
+        "fn": 1,
+        "tp": 89
+      },
+      "per_defect_recall": {
+        "missing_hole": 0.9333333333333333,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    }
+  },
+  {
+    "epoch": 4,
+    "train_loss": 1.1004766073226928,
+    "epoch_seconds": 60.92073777318001
+  },
+  {
+    "epoch": 5,
+    "train_loss": 1.081845832824707,
+    "epoch_seconds": 62.444522759877145
+  },
+  {
+    "epoch": 6,
+    "train_loss": 1.0770109853744507,
+    "epoch_seconds": 61.34057122003287,
+    "validation_top2": {
+      "threshold": 0.666314572095871,
+      "auroc": 0.9362962962962963,
+      "auprc": 0.9894343474682419,
+      "f1": 0.9574468085106383,
+      "precision_ng": 0.9183673469387755,
+      "recall_ng": 1.0,
+      "specificity_ok": 0.4666666666666667,
+      "false_positive_rate_ok": 0.5333333333333333,
+      "balanced_accuracy": 0.7333333333333334,
+      "confusion": {
+        "tn": 7,
+        "fp": 8,
+        "fn": 0,
+        "tp": 90
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    }
+  },
+  {
+    "epoch": 7,
+    "train_loss": 1.0702489562034607,
+    "epoch_seconds": 69.23078413214535
+  },
+  {
+    "epoch": 8,
+    "train_loss": 1.0561008801460265,
+    "epoch_seconds": 60.780267890077084
+  },
+  {
+    "epoch": 9,
+    "train_loss": 1.0608593859672546,
+    "epoch_seconds": 63.291709636803716,
+    "validation_top2": {
+      "threshold": 0.6812789142131805,
+      "auroc": 0.9822222222222222,
+      "auprc": 0.9970185291080105,
+      "f1": 0.9836065573770492,
+      "precision_ng": 0.967741935483871,
+      "recall_ng": 1.0,
+      "specificity_ok": 0.8,
+      "false_positive_rate_ok": 0.2,
+      "balanced_accuracy": 0.9,
+      "confusion": {
+        "tn": 12,
+        "fp": 3,
+        "fn": 0,
+        "tp": 90
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    }
+  },
+  {
+    "epoch": 10,
+    "train_loss": 1.049272855758667,
+    "epoch_seconds": 69.63517691101879
+  },
+  {
+    "epoch": 11,
+    "train_loss": 1.0469874963760375,
+    "epoch_seconds": 66.43837805907242
+  },
+  {
+    "epoch": 12,
+    "train_loss": 1.039954016685486,
+    "epoch_seconds": 70.09817337500863,
+    "validation_top2": {
+      "threshold": 0.61,
+      "auroc": 0.9985185185185186,
+      "auprc": 0.9997584541062801,
+      "f1": 0.9944134078212291,
+      "precision_ng": 1.0,
+      "recall_ng": 0.9888888888888889,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 0.9944444444444445,
+      "confusion": {
+        "tn": 15,
+        "fp": 0,
+        "fn": 1,
+        "tp": 89
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 0.9333333333333333,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    }
+  }
+]
