@@ -1,0 +1,103 @@
+{
+  "source_run": "/hy-tmp/runs/S08_resnet18",
+  "aggregation": "top2",
+  "warning": "Calibration uses synthetic OK; repeat with real production OK before deployment.",
+  "operating_points": {
+    "f1_optimal": {
+      "validation": {
+        "threshold": 0.7863940596580505,
+        "auroc": 1.0,
+        "auprc": 1.0,
+        "f1": 1.0,
+        "recall_ng": 1.0,
+        "specificity_ok": 1.0,
+        "false_positive_rate_ok": 0.0,
+        "confusion": {
+          "tn": 15,
+          "fp": 0,
+          "fn": 0,
+          "tp": 90
+        }
+      },
+      "test": {
+        "threshold": 0.7863940596580505,
+        "auroc": 1.0,
+        "auprc": 0.9999999999999999,
+        "f1": 1.0,
+        "recall_ng": 1.0,
+        "specificity_ok": 1.0,
+        "false_positive_rate_ok": 0.0,
+        "confusion": {
+          "tn": 20,
+          "fp": 0,
+          "fn": 0,
+          "tp": 120
+        }
+      }
+    },
+    "zero_validation_fn": {
+      "validation": {
+        "threshold": 0.7863940596580505,
+        "auroc": 1.0,
+        "auprc": 1.0,
+        "f1": 1.0,
+        "recall_ng": 1.0,
+        "specificity_ok": 1.0,
+        "false_positive_rate_ok": 0.0,
+        "confusion": {
+          "tn": 15,
+          "fp": 0,
+          "fn": 0,
+          "tp": 90
+        }
+      },
+      "test": {
+        "threshold": 0.7863940596580505,
+        "auroc": 1.0,
+        "auprc": 0.9999999999999999,
+        "f1": 1.0,
+        "recall_ng": 1.0,
+        "specificity_ok": 1.0,
+        "false_positive_rate_ok": 0.0,
+        "confusion": {
+          "tn": 20,
+          "fp": 0,
+          "fn": 0,
+          "tp": 120
+        }
+      }
+    },
+    "zero_validation_fp": {
+      "validation": {
+        "threshold": 0.7855224907398225,
+        "auroc": 1.0,
+        "auprc": 1.0,
+        "f1": 1.0,
+        "recall_ng": 1.0,
+        "specificity_ok": 1.0,
+        "false_positive_rate_ok": 0.0,
+        "confusion": {
+          "tn": 15,
+          "fp": 0,
+          "fn": 0,
+          "tp": 90
+        }
+      },
+      "test": {
+        "threshold": 0.7855224907398225,
+        "auroc": 1.0,
+        "auprc": 0.9999999999999999,
+        "f1": 1.0,
+        "recall_ng": 1.0,
+        "specificity_ok": 1.0,
+        "false_positive_rate_ok": 0.0,
+        "confusion": {
+          "tn": 20,
+          "fp": 0,
+          "fn": 0,
+          "tp": 120
+        }
+      }
+    }
+  }
+}
