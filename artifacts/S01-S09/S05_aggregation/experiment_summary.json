@@ -1,0 +1,65 @@
+{
+  "experiment": "S05",
+  "source_run": "S04_cpg_ssn",
+  "purpose": "Compare image-level tile-score aggregation without retraining.",
+  "validation": {
+    "max": {
+      "threshold": 0.65,
+      "auroc": 0.9977777777777779,
+      "auprc": 0.9996415770609317,
+      "f1": 0.9944134078212291,
+      "recall_ng": 0.9888888888888889,
+      "specificity_ok": 1.0,
+      "confusion": {"tn": 15, "fp": 0, "fn": 1, "tp": 89}
+    },
+    "top2": {
+      "threshold": 0.63,
+      "auroc": 1.0,
+      "auprc": 0.9999999999999999,
+      "f1": 1.0,
+      "recall_ng": 1.0,
+      "specificity_ok": 1.0,
+      "confusion": {"tn": 15, "fp": 0, "fn": 0, "tp": 90}
+    },
+    "top3": {
+      "threshold": 0.63,
+      "auroc": 1.0,
+      "auprc": 0.9999999999999999,
+      "f1": 1.0,
+      "recall_ng": 1.0,
+      "specificity_ok": 1.0,
+      "confusion": {"tn": 15, "fp": 0, "fn": 0, "tp": 90}
+    }
+  },
+  "test": {
+    "max": {
+      "threshold": 0.65,
+      "auroc": 0.9883333333333334,
+      "auprc": 0.9981516171365674,
+      "f1": 0.9707112970711297,
+      "recall_ng": 0.9666666666666667,
+      "specificity_ok": 0.85,
+      "confusion": {"tn": 17, "fp": 3, "fn": 4, "tp": 116}
+    },
+    "top2": {
+      "threshold": 0.63,
+      "auroc": 1.0,
+      "auprc": 0.9999999999999998,
+      "f1": 0.9876543209876543,
+      "recall_ng": 1.0,
+      "specificity_ok": 0.85,
+      "confusion": {"tn": 17, "fp": 3, "fn": 0, "tp": 120}
+    },
+    "top3": {
+      "threshold": 0.63,
+      "auroc": 1.0,
+      "auprc": 0.9999999999999998,
+      "f1": 1.0,
+      "recall_ng": 1.0,
+      "specificity_ok": 1.0,
+      "confusion": {"tn": 20, "fp": 0, "fn": 0, "tp": 120}
+    }
+  },
+  "recommendation": "Pre-register top3 for the next real-OK calibration because top2 and top3 tie on validation while top3 is less sensitive to isolated high-score tiles.",
+  "leakage_warning": "The test comparison is diagnostic only. Do not choose aggregation from test performance; confirm top3 on a new real-OK calibration set."
+}
