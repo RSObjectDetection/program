@@ -1,0 +1,181 @@
+{
+  "name": "S04_cpg_ssn",
+  "backbone": "wide_resnet50_2",
+  "image_size": 256,
+  "prototype": true,
+  "prototype_count": 417,
+  "glass": true,
+  "glass_steps": 1,
+  "shots_per_class": 0,
+  "train_tile_counts": {
+    "0": 3398,
+    "1": 3637
+  },
+  "epoch_samples": 2000,
+  "epochs_completed": 12,
+  "validation": {
+    "max": {
+      "threshold": 0.65,
+      "auroc": 0.9977777777777779,
+      "auprc": 0.9996415770609317,
+      "f1": 0.9944134078212291,
+      "precision_ng": 1.0,
+      "recall_ng": 0.9888888888888889,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 0.9944444444444445,
+      "confusion": {
+        "tn": 15,
+        "fp": 0,
+        "fn": 1,
+        "tp": 89
+      },
+      "per_defect_recall": {
+        "missing_hole": 0.9333333333333333,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    },
+    "top2": {
+      "threshold": 0.63,
+      "auroc": 1.0,
+      "auprc": 0.9999999999999999,
+      "f1": 1.0,
+      "precision_ng": 1.0,
+      "recall_ng": 1.0,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 1.0,
+      "confusion": {
+        "tn": 15,
+        "fp": 0,
+        "fn": 0,
+        "tp": 90
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    },
+    "top3": {
+      "threshold": 0.63,
+      "auroc": 1.0,
+      "auprc": 0.9999999999999999,
+      "f1": 1.0,
+      "precision_ng": 1.0,
+      "recall_ng": 1.0,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 1.0,
+      "confusion": {
+        "tn": 15,
+        "fp": 0,
+        "fn": 0,
+        "tp": 90
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    }
+  },
+  "test": {
+    "max": {
+      "threshold": 0.65,
+      "auroc": 0.9883333333333334,
+      "auprc": 0.9981516171365674,
+      "f1": 0.9707112970711297,
+      "precision_ng": 0.9747899159663865,
+      "recall_ng": 0.9666666666666667,
+      "specificity_ok": 0.85,
+      "false_positive_rate_ok": 0.15,
+      "balanced_accuracy": 0.9083333333333333,
+      "confusion": {
+        "tn": 17,
+        "fp": 3,
+        "fn": 4,
+        "tp": 116
+      },
+      "per_defect_recall": {
+        "missing_hole": 0.95,
+        "mouse_bite": 0.95,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 0.95,
+        "spurious_copper": 0.95
+      },
+      "images": 140
+    },
+    "top2": {
+      "threshold": 0.63,
+      "auroc": 1.0,
+      "auprc": 0.9999999999999998,
+      "f1": 0.9876543209876543,
+      "precision_ng": 0.975609756097561,
+      "recall_ng": 1.0,
+      "specificity_ok": 0.85,
+      "false_positive_rate_ok": 0.15,
+      "balanced_accuracy": 0.925,
+      "confusion": {
+        "tn": 17,
+        "fp": 3,
+        "fn": 0,
+        "tp": 120
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 140
+    },
+    "top3": {
+      "threshold": 0.63,
+      "auroc": 1.0,
+      "auprc": 0.9999999999999998,
+      "f1": 1.0,
+      "precision_ng": 1.0,
+      "recall_ng": 1.0,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 1.0,
+      "confusion": {
+        "tn": 20,
+        "fp": 0,
+        "fn": 0,
+        "tp": 120
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 140
+    }
+  },
+  "selected_aggregation": "top2",
+  "latency_mean_ms_per_tile": 2.4189099844079465,
+  "latency_p95_ms_per_tile": 2.4253121016954537,
+  "parameter_count": 33722567,
+  "normal_data_warning": "OK validation/test images are synthetic; real-OK calibration is pending"
+}
