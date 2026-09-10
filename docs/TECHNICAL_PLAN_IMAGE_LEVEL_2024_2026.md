@@ -1,4 +1,6 @@
-# 芯片整图少样本缺陷分类技术方案（2024–2026）
+# 芯片整图少样本缺陷分类技术方案（2024–2026，已被简化方案取代）
+
+> 状态：本方案包含多类分类和多个研究模块，已不再作为当前执行方案。当前仅做OK/NG，并采用单一SuperSimpleNet主线，见 [TECHNICAL_PLAN_OK_NG_SUPERSIMPLENET.md](TECHNICAL_PLAN_OK_NG_SUPERSIMPLENET.md)。
 
 ## 1. 已确认的任务
 
@@ -293,4 +295,3 @@ L = L_class-balanced-CE
 - SeaS, ICCV 2025：正常/异常属性解耦的工业图像生成。<https://openaccess.thecvf.com/content/ICCV2025/html/Dai_SeaS_Few-shot_Industrial_Anomaly_Image_Generation_with_Separation_and_Sharing_ICCV_2025_paper.html>
 - FastRef, CVPR 2026：查询感知的正常原型快速细化和异常抑制。<https://openaccess.thecvf.com/content/CVPR2026/html/Li_FastRef_Fast_Prototype_Refinement_for_Few-shot_Industrial_Anomaly_Detection_CVPR_2026_paper.html>
 - DCP-SFR, CVPR 2026：保留浅层微弱缺陷线索的结构特征细化。<https://openaccess.thecvf.com/content/CVPR2026/html/Jiang_Defect_Cue-Preserved_Structural_Feature_Refinement_for_Few-Shot_Anomaly_Detection_CVPR_2026_paper.html>
-
