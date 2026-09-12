@@ -24,15 +24,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from PIL import Image
-from sklearn.metrics import (
-    average_precision_score,
-    balanced_accuracy_score,
-    confusion_matrix,
-    f1_score,
-    precision_score,
-    recall_score,
-    roc_auc_score,
-)
 from torch.utils.data import DataLoader, Dataset, WeightedRandomSampler
 from torchvision.transforms import ColorJitter
 from torchvision.transforms import functional as TF
@@ -369,6 +360,8 @@ def aggregate_sources(tile_rows, tile_scores, mode):
 
 
 def choose_threshold(labels, scores):
+    from sklearn.metrics import f1_score
+
     candidates = np.unique(np.r_[0.0, np.linspace(0.01, 0.99, 99), scores, 1.0])
     best = (float("-inf"), 0.5)
     for threshold in candidates:
@@ -380,6 +373,16 @@ def choose_threshold(labels, scores):
 
 
 def source_metrics(records, threshold=None):
+    from sklearn.metrics import (
+        average_precision_score,
+        balanced_accuracy_score,
+        confusion_matrix,
+        f1_score,
+        precision_score,
+        recall_score,
+        roc_auc_score,
+    )
+
     labels = np.asarray([record["label"] for record in records], dtype=np.uint8)
     scores = np.asarray([record["score"] for record in records], dtype=np.float64)
     if threshold is None:
@@ -502,6 +505,16 @@ def main() -> None:
     )
     optimizer, scheduler = model.get_optimizers()
     args.output_dir.mkdir(parents=True, exist_ok=True)
+    if prototypes is not None:
+        torch.save(
+            {
+                "prototypes": prototypes,
+                "default": default_prototype,
+                "prototype_size": args.prototype_size,
+                "templates": sorted({row["template"] for row in rows["train"]}),
+            },
+            args.output_dir / "prototypes.pt",
+        )
     history = []
     best_ap, stale = float("-inf"), 0
 
@@ -640,4 +653,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

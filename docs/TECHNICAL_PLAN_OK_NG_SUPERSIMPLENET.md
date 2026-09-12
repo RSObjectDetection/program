@@ -566,6 +566,7 @@ dataset_version
 |---|---|
 | 同版组划分、中值 OK、滑窗 manifest | `scripts/prepare_okng_dataset.py` |
 | SuperSimpleNet 包装、位置原型、GLASS 困难化、训练与推理 | `scripts/run_cpg_ssn.py` |
+| 单张图/文件夹整图 OK/NG 推理 | `scripts/infer_cpg_ssn.py` |
 | 阈值策略校准 | `scripts/calibrate_okng_thresholds.py` |
 | S01–S09 汇总 | `scripts/collect_s01_s09.py` |
 | 官方代码兼容补丁 | `patches/supersimplenet_py38.patch` |
