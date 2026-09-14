@@ -1,0 +1,2 @@
+image,template,score,prediction,threshold,aggregation,tile_count,elapsed_ms,top_tile_scores
+/root/chip_project/data/okng_512_o128/normal_images/test/01_02_ok.jpg,01,0.7831257283687592,OK,0.7839441001415253,top2,32,1597.58429415524,"[0.7888859510421753, 0.777365505695343, 0.7695422768592834]"
