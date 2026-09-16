@@ -11,6 +11,7 @@ import argparse
 import csv
 import json
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import numpy as np
@@ -69,6 +70,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--aggregation", choices=("max", "top2", "top3"), default="top2")
     parser.add_argument("--batch", type=int, default=16)
     parser.add_argument("--workers", type=int, default=4)
+    parser.add_argument(
+        "--preprocess-workers",
+        type=int,
+        default=8,
+        help="Threads used by the decode-once PIL preprocessing path.",
+    )
     parser.add_argument(
         "--legacy-loader",
         action="store_true",
@@ -219,6 +226,34 @@ def synchronize(device: str) -> None:
         torch.cuda.synchronize()
 
 
+def preprocess_tile(image: Image.Image, row: dict, image_size: int) -> torch.Tensor:
+    crop = image.crop(
+        (row["x"], row["y"], row["x"] + row["w"], row["y"] + row["h"])
+    )
+    crop = TF.resize(crop, [image_size, image_size], antialias=True)
+    return TF.normalize(
+        TF.to_tensor(crop),
+        (0.485, 0.456, 0.406),
+        (0.229, 0.224, 0.225),
+    )
+
+
+@torch.inference_mode()
+def warmup_model(model, default, args, device: str) -> float:
+    if device != "cuda":
+        return 0.0
+    started = time.perf_counter()
+    batch_size = max(1, args.batch)
+    dummy_images = torch.zeros(
+        (batch_size, 3, args.image_size, args.image_size), device=device
+    )
+    dummy_prototypes = default.unsqueeze(0).expand(batch_size, *default.shape)
+    model(dummy_images, prototypes=dummy_prototypes)
+    synchronize(device)
+    del dummy_images, dummy_prototypes
+    return (time.perf_counter() - started) * 1000
+
+
 def prediction_result(path, template, scores, args, timings, pipeline) -> dict:
     aggregation_started = time.perf_counter()
     image_score = aggregate(scores, args.aggregation)
@@ -296,27 +331,24 @@ def predict_image(model, path, template, prototypes, default, args, device) -> d
     )
     grid_ms = (time.perf_counter() - stage_started) * 1000
 
+    stage_started = time.perf_counter()
+    transform = lambda row: preprocess_tile(image, row, args.image_size)
+    if args.preprocess_workers > 1:
+        with ThreadPoolExecutor(max_workers=args.preprocess_workers) as pool:
+            tiles = list(pool.map(transform, rows))
+    else:
+        tiles = [transform(row) for row in rows]
+    preprocess_ms = (time.perf_counter() - stage_started) * 1000
+
     scores = []
-    preprocess_ms = 0.0
     image_h2d_ms = 0.0
     prototype_select_ms = 0.0
     model_forward_ms = 0.0
     score_d2h_ms = 0.0
-    mean = (0.485, 0.456, 0.406)
-    std = (0.229, 0.224, 0.225)
-
     for offset in range(0, len(rows), args.batch):
         chunk = rows[offset : offset + args.batch]
-
         stage_started = time.perf_counter()
-        tiles = []
-        for row in chunk:
-            crop = image.crop(
-                (row["x"], row["y"], row["x"] + row["w"], row["y"] + row["h"])
-            )
-            crop = TF.resize(crop, [args.image_size, args.image_size], antialias=True)
-            tiles.append(TF.normalize(TF.to_tensor(crop), mean, std))
-        cpu_batch = torch.stack(tiles)
+        cpu_batch = torch.stack(tiles[offset : offset + args.batch])
         preprocess_ms += (time.perf_counter() - stage_started) * 1000
 
         synchronize(device)
@@ -365,6 +397,8 @@ def main() -> None:
     cli_parse_ms = (time.perf_counter() - main_started) * 1000
     if args.tile_size <= 0 or args.overlap < 0 or args.overlap >= args.tile_size:
         raise ValueError("Require tile-size > 0 and 0 <= overlap < tile-size")
+    if args.batch <= 0 or args.workers < 0 or args.preprocess_workers <= 0:
+        raise ValueError("Require batch > 0, workers >= 0, and preprocess-workers > 0")
     args.threshold = resolve_threshold(args)
     if not 0 <= args.threshold <= 1:
         raise ValueError("threshold must be between 0 and 1")
@@ -401,6 +435,8 @@ def main() -> None:
     synchronize(device)
     prototype_to_device_ms = (time.perf_counter() - stage_started) * 1000
 
+    cuda_warmup_ms = warmup_model(model, default, args, device)
+
     template = resolve_template(args.template, templates)
     images = collect_images(args)
     startup_total_ms = (time.perf_counter() - PROCESS_STARTED) * 1000
@@ -412,6 +448,7 @@ def main() -> None:
         "checkpoint_load_ms": checkpoint_load_ms,
         "prototype_load_ms": prototype_load_ms,
         "prototype_to_device_ms": prototype_to_device_ms,
+        "cuda_warmup_ms": cuda_warmup_ms,
         "startup_total_ms": startup_total_ms,
     }
     predictor = predict_image_legacy if args.legacy_loader else predict_image
