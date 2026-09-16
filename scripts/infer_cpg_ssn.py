@@ -3,15 +3,21 @@
 
 from __future__ import annotations
 
+import time
+
+PROCESS_STARTED = time.perf_counter()
+
 import argparse
 import csv
 import json
 import sys
-import time
 from pathlib import Path
+
 import numpy as np
 import torch
+from PIL import Image
 from torch.utils.data import DataLoader
+from torchvision.transforms import functional as TF
 
 from prepare_okng_dataset import fixed_starts
 from run_cpg_ssn import (
@@ -55,10 +61,19 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--overlap", type=int, default=128)
     parser.add_argument("--image-size", type=int, default=256)
     parser.add_argument("--prototype-size", type=int, default=8)
-    parser.add_argument("--threshold", type=float, default=0.7863940596580505)
+    parser.add_argument(
+        "--threshold",
+        type=float,
+        help="Decision threshold. Defaults to validation threshold in checkpoint-dir/experiment_summary.json.",
+    )
     parser.add_argument("--aggregation", choices=("max", "top2", "top3"), default="top2")
     parser.add_argument("--batch", type=int, default=16)
     parser.add_argument("--workers", type=int, default=4)
+    parser.add_argument(
+        "--legacy-loader",
+        action="store_true",
+        help="Use the old per-tile JPEG loader for before/after benchmarking.",
+    )
     return parser.parse_args()
 
 
@@ -145,11 +160,26 @@ def resolve_template(requested: str | None, templates: list[str]) -> str:
     )
 
 
-def image_rows(path: Path, template: str, tile_size: int, overlap: int) -> list[dict]:
-    from PIL import Image
+def resolve_threshold(args: argparse.Namespace) -> float:
+    if args.threshold is not None:
+        return args.threshold
+    summary_path = args.checkpoint.parent / "experiment_summary.json"
+    if not summary_path.is_file():
+        raise ValueError(
+            "Pass --threshold or place experiment_summary.json next to the checkpoint"
+        )
+    summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    return float(summary["validation"][args.aggregation]["threshold"])
 
-    with Image.open(path) as opened:
-        width, height = opened.size
+
+def tile_rows(
+    path: Path,
+    template: str,
+    width: int,
+    height: int,
+    tile_size: int,
+    overlap: int,
+) -> list[dict]:
     rows = []
     for y0 in fixed_starts(height, tile_size, overlap):
         for x0 in fixed_starts(width, tile_size, overlap):
@@ -171,14 +201,48 @@ def image_rows(path: Path, template: str, tile_size: int, overlap: int) -> list[
     return rows
 
 
+def image_rows(path: Path, template: str, tile_size: int, overlap: int) -> list[dict]:
+
+    with Image.open(path) as opened:
+        width, height = opened.size
+    return tile_rows(path, template, width, height, tile_size, overlap)
+
+
 def aggregate(scores: list[float], mode: str) -> float:
     ordered = sorted(scores, reverse=True)
     count = {"max": 1, "top2": 2, "top3": 3}[mode]
     return float(np.mean(ordered[: min(count, len(ordered))]))
 
 
-@torch.no_grad()
-def predict_image(model, path, template, prototypes, default, args, device) -> dict:
+def synchronize(device: str) -> None:
+    if device == "cuda":
+        torch.cuda.synchronize()
+
+
+def prediction_result(path, template, scores, args, timings, pipeline) -> dict:
+    aggregation_started = time.perf_counter()
+    image_score = aggregate(scores, args.aggregation)
+    aggregation_ms = (time.perf_counter() - aggregation_started) * 1000
+    top_indices = np.argsort(np.asarray(scores))[::-1][: min(3, len(scores))]
+    timings["pipeline_total_ms"] = timings["elapsed_ms"] + aggregation_ms
+    return {
+        "image": str(path),
+        "template": template,
+        "score": image_score,
+        "prediction": "NG" if image_score >= args.threshold else "OK",
+        "threshold": args.threshold,
+        "aggregation": args.aggregation,
+        "pipeline": pipeline,
+        "tile_count": len(scores),
+        **timings,
+        "aggregation_ms": aggregation_ms,
+        "top_tile_scores": json.dumps([scores[index] for index in top_indices]),
+    }
+
+
+@torch.inference_mode()
+def predict_image_legacy(model, path, template, prototypes, default, args, device) -> dict:
+    """Original training-oriented loader, retained only for reproducible comparison."""
     rows = image_rows(path, template, args.tile_size, args.overlap)
     loader = DataLoader(
         TileDataset(rows, args.image_size, training=False),
@@ -188,62 +252,185 @@ def predict_image(model, path, template, prototypes, default, args, device) -> d
         pin_memory=True,
     )
     scores = []
-    if device == "cuda":
-        torch.cuda.synchronize()
+    synchronize(device)
     started = time.perf_counter()
     for batch in loader:
         proto = prototype_batch(batch["prototype_key"], prototypes, default, device)
         _, logits = model(batch["image"].to(device, non_blocking=True), prototypes=proto)
         scores.extend(torch.sigmoid(logits).cpu().tolist())
-    if device == "cuda":
-        torch.cuda.synchronize()
+    synchronize(device)
     elapsed_ms = (time.perf_counter() - started) * 1000
-    image_score = aggregate(scores, args.aggregation)
-    top_indices = np.argsort(np.asarray(scores))[::-1][: min(3, len(scores))]
-    return {
-        "image": str(path),
-        "template": template,
-        "score": image_score,
-        "prediction": "NG" if image_score >= args.threshold else "OK",
-        "threshold": args.threshold,
-        "aggregation": args.aggregation,
-        "tile_count": len(scores),
+    timings = {
         "elapsed_ms": elapsed_ms,
-        "top_tile_scores": json.dumps([scores[index] for index in top_indices]),
+        "decode_ms": None,
+        "grid_ms": None,
+        "preprocess_ms": None,
+        "image_h2d_ms": None,
+        "prototype_select_ms": None,
+        "model_forward_ms": None,
+        "score_d2h_ms": None,
+        "legacy_loader_and_inference_ms": elapsed_ms,
     }
+    return prediction_result(path, template, scores, args, timings, "legacy")
+
+
+@torch.inference_mode()
+def predict_image(model, path, template, prototypes, default, args, device) -> dict:
+    """Decode once, crop in memory, and batch all tiles without DataLoader workers."""
+    total_started = time.perf_counter()
+
+    stage_started = time.perf_counter()
+    with Image.open(path) as opened:
+        image = opened.convert("RGB")
+        image.load()
+    decode_ms = (time.perf_counter() - stage_started) * 1000
+
+    stage_started = time.perf_counter()
+    rows = tile_rows(
+        path,
+        template,
+        image.width,
+        image.height,
+        args.tile_size,
+        args.overlap,
+    )
+    grid_ms = (time.perf_counter() - stage_started) * 1000
+
+    scores = []
+    preprocess_ms = 0.0
+    image_h2d_ms = 0.0
+    prototype_select_ms = 0.0
+    model_forward_ms = 0.0
+    score_d2h_ms = 0.0
+    mean = (0.485, 0.456, 0.406)
+    std = (0.229, 0.224, 0.225)
+
+    for offset in range(0, len(rows), args.batch):
+        chunk = rows[offset : offset + args.batch]
+
+        stage_started = time.perf_counter()
+        tiles = []
+        for row in chunk:
+            crop = image.crop(
+                (row["x"], row["y"], row["x"] + row["w"], row["y"] + row["h"])
+            )
+            crop = TF.resize(crop, [args.image_size, args.image_size], antialias=True)
+            tiles.append(TF.normalize(TF.to_tensor(crop), mean, std))
+        cpu_batch = torch.stack(tiles)
+        preprocess_ms += (time.perf_counter() - stage_started) * 1000
+
+        synchronize(device)
+        stage_started = time.perf_counter()
+        image_batch = cpu_batch.to(device, non_blocking=False)
+        synchronize(device)
+        image_h2d_ms += (time.perf_counter() - stage_started) * 1000
+
+        synchronize(device)
+        stage_started = time.perf_counter()
+        proto = torch.stack(
+            [prototypes.get(row["prototype_key"], default) for row in chunk]
+        )
+        synchronize(device)
+        prototype_select_ms += (time.perf_counter() - stage_started) * 1000
+
+        synchronize(device)
+        stage_started = time.perf_counter()
+        _, logits = model(image_batch, prototypes=proto)
+        synchronize(device)
+        model_forward_ms += (time.perf_counter() - stage_started) * 1000
+
+        stage_started = time.perf_counter()
+        scores.extend(torch.sigmoid(logits).cpu().tolist())
+        synchronize(device)
+        score_d2h_ms += (time.perf_counter() - stage_started) * 1000
+
+    elapsed_ms = (time.perf_counter() - total_started) * 1000
+    timings = {
+        "elapsed_ms": elapsed_ms,
+        "decode_ms": decode_ms,
+        "grid_ms": grid_ms,
+        "preprocess_ms": preprocess_ms,
+        "image_h2d_ms": image_h2d_ms,
+        "prototype_select_ms": prototype_select_ms,
+        "model_forward_ms": model_forward_ms,
+        "score_d2h_ms": score_d2h_ms,
+        "legacy_loader_and_inference_ms": None,
+    }
+    return prediction_result(path, template, scores, args, timings, "decode_once")
 
 
 def main() -> None:
+    main_started = time.perf_counter()
     args = parse_args()
+    cli_parse_ms = (time.perf_counter() - main_started) * 1000
     if args.tile_size <= 0 or args.overlap < 0 or args.overlap >= args.tile_size:
         raise ValueError("Require tile-size > 0 and 0 <= overlap < tile-size")
+    args.threshold = resolve_threshold(args)
     if not 0 <= args.threshold <= 1:
         raise ValueError("threshold must be between 0 and 1")
+
+    stage_started = time.perf_counter()
     sys.path.insert(0, str(args.official_repo.resolve()))
     from model.supersimplenet import SuperSimpleNet
+    official_import_ms = (time.perf_counter() - stage_started) * 1000
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
+    stage_started = time.perf_counter()
     model = CPGSuperSimpleNet(
         SuperSimpleNet,
         args.image_size,
         model_config(args.backbone),
         use_prototype=True,
     ).to(device)
+    synchronize(device)
+    model_init_ms = (time.perf_counter() - stage_started) * 1000
+
+    stage_started = time.perf_counter()
     model.load_model(args.checkpoint)
     model.eval()
+    synchronize(device)
+    checkpoint_load_ms = (time.perf_counter() - stage_started) * 1000
+
+    stage_started = time.perf_counter()
     prototypes, default, templates = load_or_build_prototypes(model, args, device)
+    prototype_load_ms = (time.perf_counter() - stage_started) * 1000
+
+    stage_started = time.perf_counter()
+    prototypes = {key: value.to(device) for key, value in prototypes.items()}
+    default = default.to(device)
+    synchronize(device)
+    prototype_to_device_ms = (time.perf_counter() - stage_started) * 1000
+
     template = resolve_template(args.template, templates)
+    images = collect_images(args)
+    startup_total_ms = (time.perf_counter() - PROCESS_STARTED) * 1000
+    startup_timings = {
+        "python_import_ms": (main_started - PROCESS_STARTED) * 1000,
+        "cli_parse_ms": cli_parse_ms,
+        "official_model_import_ms": official_import_ms,
+        "model_init_ms": model_init_ms,
+        "checkpoint_load_ms": checkpoint_load_ms,
+        "prototype_load_ms": prototype_load_ms,
+        "prototype_to_device_ms": prototype_to_device_ms,
+        "startup_total_ms": startup_total_ms,
+    }
+    predictor = predict_image_legacy if args.legacy_loader else predict_image
     results = [
-        predict_image(model, path, template, prototypes, default, args, device)
-        for path in collect_images(args)
+        {**startup_timings, **predictor(model, path, template, prototypes, default, args, device)}
+        for path in images
     ]
     args.output.parent.mkdir(parents=True, exist_ok=True)
+    output_started = time.perf_counter()
     with args.output.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(results[0]))
         writer.writeheader()
         writer.writerows(results)
+    output_write_ms = (time.perf_counter() - output_started) * 1000
     print(json.dumps(results, ensure_ascii=False, indent=2))
-    print(f"Saved {len(results)} predictions to {args.output}")
+    print(
+        f"Saved {len(results)} predictions to {args.output} "
+        f"(output_write_ms={output_write_ms:.3f})"
+    )
 
 
 if __name__ == "__main__":
