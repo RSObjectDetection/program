@@ -40,7 +40,7 @@ Top-2 唯一漏检为 `04_spurious_copper_03`，分数 0.7657565。三种聚合�
 
 - 参数量：4,563,783。
 - RTX 3090 单图块平均模型延迟：1.154 ms；P95：1.195 ms。
-- 独立推理冒烟测试：一张含 32 个图块的合成 OK 图正确判为 OK；当前一次性进程的端到端计时约 1.60 s，包含 JPEG 重复解码和 DataLoader 进程启动，不代表常驻服务延迟。
+- 独立推理冒烟测试：一张含 32 个图块的合成 OK 图正确判为 OK。后续已消除 JPEG 重复解码和单图 DataLoader 进程启动；RTX 4090 上优化前后分阶段结果见 [`artifacts/inference_optimization_rtx4090/README.md`](../inference_optimization_rtx4090/README.md)。
 
 ## 服务器持久化文件
 

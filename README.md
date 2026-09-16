@@ -21,8 +21,8 @@ This is a closed-dataset feasibility result, not a production claim: all availab
 
 ```bash
 python scripts/prepare_okng_dataset.py \
-  --dataset-root /hy-tmp/data/raw \
-  --output-root /hy-tmp/data/okng_512_o128 \
+  --dataset-root /root/chip_project/data/raw \
+  --output-root /root/chip_project/data/okng_512_o128 \
   --tile-size 512 --overlap 128 \
   --train-groups 80 --val-groups 15 --test-groups 20
 
@@ -32,9 +32,9 @@ git -C /root/SuperSimpleNet checkout 98ab4d5fbdcdef528fafbc42e4b5ee15f08f5a7d
 git -C /root/SuperSimpleNet apply /root/program/patches/supersimplenet_py38.patch
 
 python scripts/run_cpg_ssn.py \
-  --manifest /hy-tmp/data/okng_512_o128/tiles.csv \
+  --manifest /root/chip_project/data/okng_512_o128/tiles.csv \
   --official-repo /root/SuperSimpleNet \
-  --output-dir /hy-tmp/runs/deployment_candidate \
+  --output-dir /root/program_runs/deployment_candidate \
   --name deployment_candidate --backbone resnet18 \
   --image-size 256 --epochs 12 --batch 16 \
   --prototype --glass
@@ -42,16 +42,15 @@ python scripts/run_cpg_ssn.py \
 
 ## Run inference
 
-`scripts/infer_cpg_ssn.py` is the standalone whole-image inference entry point. The
-existing S08 checkpoint predates automatic prototype saving, so rebuild its normal
-prototype bank from the training manifest:
+`scripts/infer_cpg_ssn.py` is the standalone whole-image inference entry point.
+Use the saved S08 normal prototype bank with its checkpoint:
 
 ```bash
 python scripts/infer_cpg_ssn.py \
   --image /root/path/to/test.jpg \
-  --checkpoint /hy-tmp/runs/S08_resnet18/weights.pt \
+  --checkpoint /root/program_runs/S08_resnet18/weights.pt \
   --official-repo /root/SuperSimpleNet \
-  --manifest /hy-tmp/data/okng_512_o128/tiles.csv \
+  --prototypes /root/program_runs/S08_resnet18/prototypes.pt \
   --template TEMPLATE_ID \
   --output /root/program/predictions.csv
 ```
@@ -59,15 +58,16 @@ python scripts/infer_cpg_ssn.py \
 List the available template IDs before running:
 
 ```bash
-python -c "import csv; print(sorted({r['template'] for r in csv.DictReader(open('/hy-tmp/data/okng_512_o128/tiles.csv'))}))"
+python -c "import csv; print(sorted({r['template'] for r in csv.DictReader(open('/root/chip_project/data/okng_512_o128/tiles.csv'))}))"
 ```
 
 For a directory, replace `--image ...` with `--input-dir /root/path/to/images`.
-New training runs save `prototypes.pt`; for those runs, replace `--manifest ...`
-with `--prototypes /hy-tmp/runs/RUN_NAME/prototypes.pt`. The default threshold
-`0.7863940596580505` is the provisional S08 synthetic-OK threshold and must be
-recalibrated before production use.
+If a legacy run has no `prototypes.pt`, replace `--prototypes ...` with
+`--manifest /root/chip_project/data/okng_512_o128/tiles.csv` to rebuild it. If
+`--threshold` is omitted, the script reads the matching validation threshold
+from `experiment_summary.json` beside the checkpoint. It must still be
+recalibrated with real production OK images before deployment.
 
-Every experiment writes weights and full run output under `/hy-tmp/runs/`. Lightweight summaries, histories and image-level predictions are collected under `artifacts/S01-S09/`; raw data and model weights are deliberately excluded from Git.
+Every experiment writes weights and full run output under `/root/program_runs/`; no project data is stored under `/hy-tmp`. Lightweight summaries, histories and image-level predictions are collected under `artifacts/S01-S09/`; raw data and model weights are deliberately excluded from Git. The measured inference breakdown is recorded in [artifacts/inference_optimization_rtx4090/README.md](artifacts/inference_optimization_rtx4090/README.md).
 
 The current implementation-aligned technical solution is [docs/TECHNICAL_PLAN_OK_NG_SUPERSIMPLENET.md](docs/TECHNICAL_PLAN_OK_NG_SUPERSIMPLENET.md). It explains the full SuperSimpleNet flow and the exact injection points of the position-normal prototype and GLASS-style hard-feature modules. Earlier detection and multi-class studies are retained in [docs/EXPERIMENT_PLAN.md](docs/EXPERIMENT_PLAN.md), [docs/EXPERIMENT_RESULTS.md](docs/EXPERIMENT_RESULTS.md), [docs/ANOMALY_BASELINES.md](docs/ANOMALY_BASELINES.md), [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md), [docs/LITERATURE_REVIEW_2024_2025.md](docs/LITERATURE_REVIEW_2024_2025.md), [docs/FEW_SHOT_SUPERVISED_2024_2026.md](docs/FEW_SHOT_SUPERVISED_2024_2026.md), and [docs/TECHNICAL_PLAN_IMAGE_LEVEL_2024_2026.md](docs/TECHNICAL_PLAN_IMAGE_LEVEL_2024_2026.md).
