@@ -68,12 +68,12 @@ def parse_args() -> argparse.Namespace:
         help="Decision threshold. Defaults to validation threshold in checkpoint-dir/experiment_summary.json.",
     )
     parser.add_argument("--aggregation", choices=("max", "top2", "top3"), default="top2")
-    parser.add_argument("--batch", type=int, default=16)
+    parser.add_argument("--batch", type=int, default=32)
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument(
         "--preprocess-workers",
         type=int,
-        default=8,
+        default=4,
         help="Threads used by the decode-once PIL preprocessing path.",
     )
     parser.add_argument(
@@ -349,11 +349,13 @@ def predict_image(model, path, template, prototypes, default, args, device) -> d
         chunk = rows[offset : offset + args.batch]
         stage_started = time.perf_counter()
         cpu_batch = torch.stack(tiles[offset : offset + args.batch])
+        if device == "cuda":
+            cpu_batch = cpu_batch.pin_memory()
         preprocess_ms += (time.perf_counter() - stage_started) * 1000
 
         synchronize(device)
         stage_started = time.perf_counter()
-        image_batch = cpu_batch.to(device, non_blocking=False)
+        image_batch = cpu_batch.to(device, non_blocking=device == "cuda")
         synchronize(device)
         image_h2d_ms += (time.perf_counter() - stage_started) * 1000
 
