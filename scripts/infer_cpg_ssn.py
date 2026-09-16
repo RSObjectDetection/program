@@ -300,6 +300,7 @@ def predict_image_legacy(model, path, template, prototypes, default, args, devic
         "decode_ms": None,
         "grid_ms": None,
         "preprocess_ms": None,
+        "batch_assembly_ms": None,
         "image_h2d_ms": None,
         "prototype_select_ms": None,
         "model_forward_ms": None,
@@ -341,6 +342,7 @@ def predict_image(model, path, template, prototypes, default, args, device) -> d
     preprocess_ms = (time.perf_counter() - stage_started) * 1000
 
     scores = []
+    batch_assembly_ms = 0.0
     image_h2d_ms = 0.0
     prototype_select_ms = 0.0
     model_forward_ms = 0.0
@@ -349,13 +351,11 @@ def predict_image(model, path, template, prototypes, default, args, device) -> d
         chunk = rows[offset : offset + args.batch]
         stage_started = time.perf_counter()
         cpu_batch = torch.stack(tiles[offset : offset + args.batch])
-        if device == "cuda":
-            cpu_batch = cpu_batch.pin_memory()
-        preprocess_ms += (time.perf_counter() - stage_started) * 1000
+        batch_assembly_ms += (time.perf_counter() - stage_started) * 1000
 
         synchronize(device)
         stage_started = time.perf_counter()
-        image_batch = cpu_batch.to(device, non_blocking=device == "cuda")
+        image_batch = cpu_batch.to(device, non_blocking=False)
         synchronize(device)
         image_h2d_ms += (time.perf_counter() - stage_started) * 1000
 
@@ -384,6 +384,7 @@ def predict_image(model, path, template, prototypes, default, args, device) -> d
         "decode_ms": decode_ms,
         "grid_ms": grid_ms,
         "preprocess_ms": preprocess_ms,
+        "batch_assembly_ms": batch_assembly_ms,
         "image_h2d_ms": image_h2d_ms,
         "prototype_select_ms": prototype_select_ms,
         "model_forward_ms": model_forward_ms,
