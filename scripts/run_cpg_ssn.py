@@ -42,6 +42,22 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--workers", type=int, default=6)
     parser.add_argument("--seed", type=int, default=20260910)
     parser.add_argument("--shots-per-class", type=int, default=0)
+    parser.add_argument(
+        "--include-classes",
+        nargs="+",
+        help="Defect classes retained in train/validation/test; OK images are always retained.",
+    )
+    parser.add_argument(
+        "--initial-weights",
+        type=Path,
+        help="Previous-stage weights used to initialize an incremental training stage.",
+    )
+    parser.add_argument(
+        "--learning-rate-scale",
+        type=float,
+        default=1.0,
+        help="Multiplier applied to adaptor, segmentation, and decision-head learning rates.",
+    )
     parser.add_argument("--max-train-samples", type=int, default=4000)
     parser.add_argument("--eval-every", type=int, default=3)
     parser.add_argument("--patience", type=int, default=4)
@@ -55,8 +71,9 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def read_rows(path: Path, shots: int) -> dict[str, list[dict]]:
+def read_rows(path: Path, shots: int, include_classes=None) -> dict[str, list[dict]]:
     splits = {"train": [], "val": [], "test": []}
+    allowed = None if include_classes is None else set(include_classes)
     with path.open(newline="", encoding="utf-8") as handle:
         for row in csv.DictReader(handle):
             row["label"] = int(row["label"])
@@ -64,6 +81,8 @@ def read_rows(path: Path, shots: int) -> dict[str, list[dict]]:
             for key in ("x", "y", "w", "h", "contains_defect", "synthetic_ok"):
                 row[key] = int(row[key])
             if row["split"] == "train" and shots > 0 and row["train_rank"] > shots:
+                continue
+            if row["label"] == 1 and allowed is not None and row["source_class"] not in allowed:
                 continue
             splits[row["split"]].append(row)
     return splits
@@ -460,9 +479,18 @@ def main() -> None:
     sys.path.insert(0, str(args.official_repo.resolve()))
     from model.supersimplenet import SuperSimpleNet
 
-    rows = read_rows(args.manifest, args.shots_per_class)
+    if args.learning_rate_scale <= 0:
+        raise ValueError("learning-rate-scale must be positive")
+    rows = read_rows(args.manifest, args.shots_per_class, args.include_classes)
     if not rows["train"] or not rows["val"] or not rows["test"]:
         raise ValueError("Manifest must contain non-empty train, val and test splits")
+    if args.include_classes:
+        available = {
+            row["source_class"] for row in rows["train"] if row["label"] == 1
+        }
+        missing = set(args.include_classes) - available
+        if missing:
+            raise ValueError(f"Unknown or empty included defect classes: {sorted(missing)}")
     config = {
         "backbone": args.backbone,
         "layers": ["layer2", "layer3"],
@@ -476,14 +504,20 @@ def main() -> None:
         "noise_std": 0.015,
         "perlin_thr": 0.6,
         "epochs": args.epochs,
-        "seg_lr": 0.0002,
-        "dec_lr": 0.0002,
-        "adapt_lr": 0.0001,
+        "seg_lr": 0.0002 * args.learning_rate_scale,
+        "dec_lr": 0.0002 * args.learning_rate_scale,
+        "adapt_lr": 0.0001 * args.learning_rate_scale,
         "gamma": 0.4,
         "stop_grad": False,
     }
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model = CPGSuperSimpleNet(SuperSimpleNet, args.image_size, config, args.prototype).to(device)
+    if device == "cuda":
+        torch.cuda.reset_peak_memory_stats()
+    if args.initial_weights is not None:
+        if not args.initial_weights.is_file():
+            raise FileNotFoundError(args.initial_weights)
+        model.load_model(args.initial_weights)
     prototypes = default_prototype = None
     if args.prototype:
         prototypes, default_prototype = build_prototypes(
@@ -492,7 +526,18 @@ def main() -> None:
         )
     train_dataset = TileDataset(rows["train"], args.image_size, training=True)
     counts = Counter(row["label"] for row in rows["train"])
-    weights = [1.0 / counts[row["label"]] for row in rows["train"]]
+    class_counts = Counter(
+        "ok" if row["label"] == 0 else row["source_class"] for row in rows["train"]
+    )
+    defect_classes = sorted(name for name in class_counts if name != "ok")
+    weights = []
+    for row in rows["train"]:
+        if row["label"] == 0:
+            weights.append(0.5 / class_counts["ok"])
+        else:
+            weights.append(
+                0.5 / (len(defect_classes) * class_counts[row["source_class"]])
+            )
     epoch_samples = min(args.max_train_samples, max(counts.values()) * 2)
     sampler = WeightedRandomSampler(weights, num_samples=epoch_samples, replacement=True)
     train_loader = DataLoader(
@@ -631,15 +676,30 @@ def main() -> None:
         "glass": args.glass,
         "glass_steps": args.glass_steps if args.glass else 0,
         "shots_per_class": args.shots_per_class,
+        "include_classes": defect_classes,
+        "initial_weights": None if args.initial_weights is None else str(args.initial_weights),
+        "learning_rate_scale": args.learning_rate_scale,
         "train_tile_counts": dict(counts),
+        "train_tile_counts_by_class": dict(class_counts),
+        "image_counts": {
+            split: len({row["source_id"] for row in split_rows})
+            for split, split_rows in rows.items()
+        },
         "epoch_samples": epoch_samples,
         "epochs_completed": history[-1]["epoch"],
+        "training_seconds": float(sum(record["epoch_seconds"] for record in history)),
         "validation": validation,
         "test": test,
         "selected_aggregation": "top2",
         "latency_mean_ms_per_tile": float(np.mean(timings)),
         "latency_p95_ms_per_tile": float(np.percentile(timings, 95)),
         "parameter_count": sum(parameter.numel() for parameter in model.parameters()),
+        "torch_version": torch.__version__,
+        "cuda_version": torch.version.cuda,
+        "device": torch.cuda.get_device_name(0) if device == "cuda" else "cpu",
+        "peak_gpu_memory_mb": (
+            float(torch.cuda.max_memory_allocated() / (1024 ** 2)) if device == "cuda" else 0.0
+        ),
         "normal_data_warning": "OK validation/test images are synthetic; real-OK calibration is pending",
     }
     (args.output_dir / "experiment_summary.json").write_text(
