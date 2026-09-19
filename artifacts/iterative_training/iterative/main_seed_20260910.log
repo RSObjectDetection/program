@@ -1,0 +1,34 @@
+nohup: ignoring input
+START horizontal/H01_missing_hole: classes=['missing_hole'], shots=0
+DONE horizontal/H01_missing_hole in 11.2 min: F1=1.0000, recall=1.0000, specificity=1.0000, FP=0, FN=0
+START horizontal/H02_mouse_bite: classes=['missing_hole', 'mouse_bite'], shots=0
+DONE horizontal/H02_mouse_bite in 12.2 min: F1=0.9873, recall=0.9750, specificity=1.0000, FP=0, FN=1
+START horizontal/H03_open_circuit: classes=['missing_hole', 'mouse_bite', 'open_circuit'], shots=0
+DONE horizontal/H03_open_circuit in 12.5 min: F1=0.9916, recall=0.9833, specificity=1.0000, FP=0, FN=1
+START horizontal/H04_short: classes=['missing_hole', 'mouse_bite', 'open_circuit', 'short'], shots=0
+DONE horizontal/H04_short in 13.4 min: F1=0.9937, recall=0.9875, specificity=1.0000, FP=0, FN=1
+START horizontal/H05_spur: classes=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur'], shots=0
+DONE horizontal/H05_spur in 14.5 min: F1=0.9899, recall=0.9800, specificity=1.0000, FP=0, FN=2
+START horizontal/H06_spurious_copper: classes=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], shots=0
+DONE horizontal/H06_spurious_copper in 15.2 min: F1=0.9916, recall=0.9833, specificity=1.0000, FP=0, FN=2
+START vertical/V010: classes=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], shots=8
+DONE vertical/V010 in 9.4 min: F1=0.9558, recall=0.9917, specificity=0.5000, FP=10, FN=1
+START vertical/V020: classes=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], shots=16
+DONE vertical/V020 in 11.0 min: F1=0.9836, recall=1.0000, specificity=0.8000, FP=4, FN=0
+START vertical/V030: classes=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], shots=24
+DONE vertical/V030 in 14.6 min: F1=0.9877, recall=1.0000, specificity=0.8500, FP=3, FN=0
+START vertical/V040: classes=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], shots=32
+DONE vertical/V040 in 14.6 min: F1=0.9917, recall=0.9917, specificity=0.9500, FP=1, FN=1
+START vertical/V050: classes=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], shots=40
+DONE vertical/V050 in 16.8 min: F1=1.0000, recall=1.0000, specificity=1.0000, FP=0, FN=0
+START vertical/V060: classes=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], shots=48
+DONE vertical/V060 in 18.4 min: F1=1.0000, recall=1.0000, specificity=1.0000, FP=0, FN=0
+START vertical/V070: classes=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], shots=56
+DONE vertical/V070 in 17.8 min: F1=1.0000, recall=1.0000, specificity=1.0000, FP=0, FN=0
+START vertical/V080: classes=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], shots=64
+DONE vertical/V080 in 18.4 min: F1=0.9958, recall=0.9917, specificity=1.0000, FP=0, FN=1
+START vertical/V090: classes=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], shots=72
+DONE vertical/V090 in 18.6 min: F1=1.0000, recall=1.0000, specificity=1.0000, FP=0, FN=0
+START vertical/V100: classes=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], shots=80
+DONE vertical/V100 in 18.3 min: F1=0.9958, recall=0.9917, specificity=1.0000, FP=0, FN=1
+All requested iterative stages completed

@@ -1,0 +1,166 @@
+[
+  {
+    "epoch": 1,
+    "train_loss": 1.0772858894452817,
+    "epoch_seconds": 19.729296459117904
+  },
+  {
+    "epoch": 2,
+    "train_loss": 1.076496968182122,
+    "epoch_seconds": 21.035761007107794
+  },
+  {
+    "epoch": 3,
+    "train_loss": 1.0758976340293884,
+    "epoch_seconds": 21.871084741083905,
+    "validation_top2": {
+      "threshold": 0.6710359752178192,
+      "auroc": 0.9355555555555556,
+      "auprc": 0.9626906074652973,
+      "f1": 0.994475138121547,
+      "precision_ng": 0.989010989010989,
+      "recall_ng": 1.0,
+      "specificity_ok": 0.9333333333333333,
+      "false_positive_rate_ok": 0.06666666666666667,
+      "balanced_accuracy": 0.9666666666666667,
+      "confusion": {
+        "tn": 14,
+        "fp": 1,
+        "fn": 0,
+        "tp": 90
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    }
+  },
+  {
+    "epoch": 4,
+    "train_loss": 1.074696882468898,
+    "epoch_seconds": 21.099226525053382
+  },
+  {
+    "epoch": 5,
+    "train_loss": 1.0699896579835473,
+    "epoch_seconds": 20.122749955859035
+  },
+  {
+    "epoch": 6,
+    "train_loss": 1.0737570553291134,
+    "epoch_seconds": 20.141893729101866,
+    "validation_top2": {
+      "threshold": 0.65,
+      "auroc": 0.925925925925926,
+      "auprc": 0.9612189497138778,
+      "f1": 0.9832402234636871,
+      "precision_ng": 0.9887640449438202,
+      "recall_ng": 0.9777777777777777,
+      "specificity_ok": 0.9333333333333333,
+      "false_positive_rate_ok": 0.06666666666666667,
+      "balanced_accuracy": 0.9555555555555555,
+      "confusion": {
+        "tn": 14,
+        "fp": 1,
+        "fn": 2,
+        "tp": 88
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 0.9333333333333333,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 0.9333333333333333,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    }
+  },
+  {
+    "epoch": 7,
+    "train_loss": 1.0652780590987787,
+    "epoch_seconds": 20.34489021706395
+  },
+  {
+    "epoch": 8,
+    "train_loss": 1.0659407137370691,
+    "epoch_seconds": 20.146477760979906
+  },
+  {
+    "epoch": 9,
+    "train_loss": 1.0622480359019302,
+    "epoch_seconds": 23.370189742185175,
+    "validation_top2": {
+      "threshold": 0.6586976945400238,
+      "auroc": 0.9355555555555556,
+      "auprc": 0.9626906074652973,
+      "f1": 0.994475138121547,
+      "precision_ng": 0.989010989010989,
+      "recall_ng": 1.0,
+      "specificity_ok": 0.9333333333333333,
+      "false_positive_rate_ok": 0.06666666666666667,
+      "balanced_accuracy": 0.9666666666666667,
+      "confusion": {
+        "tn": 14,
+        "fp": 1,
+        "fn": 0,
+        "tp": 90
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    }
+  },
+  {
+    "epoch": 10,
+    "train_loss": 1.0574471114612207,
+    "epoch_seconds": 20.804536018986255
+  },
+  {
+    "epoch": 11,
+    "train_loss": 1.0471442974195249,
+    "epoch_seconds": 21.099583890056238
+  },
+  {
+    "epoch": 12,
+    "train_loss": 1.040900890420123,
+    "epoch_seconds": 21.59236493310891,
+    "validation_top2": {
+      "threshold": 0.5447214245796204,
+      "auroc": 0.9355555555555556,
+      "auprc": 0.9626906074652973,
+      "f1": 0.994475138121547,
+      "precision_ng": 0.989010989010989,
+      "recall_ng": 1.0,
+      "specificity_ok": 0.9333333333333333,
+      "false_positive_rate_ok": 0.06666666666666667,
+      "balanced_accuracy": 0.9666666666666667,
+      "confusion": {
+        "tn": 14,
+        "fp": 1,
+        "fn": 0,
+        "tp": 90
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    }
+  }
+]

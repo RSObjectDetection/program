@@ -1,0 +1,7 @@
+stage,seed,forgetting_missing_hole,forgetting_mouse_bite,forgetting_open_circuit,forgetting_short,forgetting_spur,forgetting_spurious_copper,mean_forgetting,max_forgetting
+H01_missing_hole,20260910,0.0,,,,,,0.0,0.0
+H02_mouse_bite,20260910,0.0,0.0,,,,,0.0,0.0
+H03_open_circuit,20260910,0.0,0.0,0.0,,,,0.0,0.0
+H04_short,20260910,0.0,0.0,0.0,0.0,,,0.0,0.0
+H05_spur,20260910,0.0,0.0,0.0,0.0,0.0,,0.0,0.0
+H06_spurious_copper,20260910,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0

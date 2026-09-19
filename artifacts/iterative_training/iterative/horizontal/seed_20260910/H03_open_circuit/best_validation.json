@@ -1,0 +1,28 @@
+{
+  "epoch": 6,
+  "train_loss": 1.0561685752868653,
+  "epoch_seconds": 38.06273478618823,
+  "validation_top2": {
+    "threshold": 0.56,
+    "auroc": 1.0,
+    "auprc": 1.0,
+    "f1": 1.0,
+    "precision_ng": 1.0,
+    "recall_ng": 1.0,
+    "specificity_ok": 1.0,
+    "false_positive_rate_ok": 0.0,
+    "balanced_accuracy": 1.0,
+    "confusion": {
+      "tn": 15,
+      "fp": 0,
+      "fn": 0,
+      "tp": 45
+    },
+    "per_defect_recall": {
+      "missing_hole": 1.0,
+      "mouse_bite": 1.0,
+      "open_circuit": 1.0
+    },
+    "images": 60
+  }
+}

@@ -1,0 +1,166 @@
+[
+  {
+    "epoch": 1,
+    "train_loss": 1.3684246599674226,
+    "epoch_seconds": 12.1386011200957
+  },
+  {
+    "epoch": 2,
+    "train_loss": 1.2238519042730331,
+    "epoch_seconds": 13.004385009873658
+  },
+  {
+    "epoch": 3,
+    "train_loss": 1.177628654241562,
+    "epoch_seconds": 11.806566428858787,
+    "validation_top2": {
+      "threshold": 0.7762881815433502,
+      "auroc": 0.6755555555555556,
+      "auprc": 0.8875840010519437,
+      "f1": 0.9621621621621622,
+      "precision_ng": 0.9368421052631579,
+      "recall_ng": 0.9888888888888889,
+      "specificity_ok": 0.6,
+      "false_positive_rate_ok": 0.4,
+      "balanced_accuracy": 0.7944444444444445,
+      "confusion": {
+        "tn": 9,
+        "fp": 6,
+        "fn": 1,
+        "tp": 89
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 0.9333333333333333,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    }
+  },
+  {
+    "epoch": 4,
+    "train_loss": 1.1561321884393692,
+    "epoch_seconds": 12.495094465790316
+  },
+  {
+    "epoch": 5,
+    "train_loss": 1.137101347744465,
+    "epoch_seconds": 11.951190407853574
+  },
+  {
+    "epoch": 6,
+    "train_loss": 1.136045241355896,
+    "epoch_seconds": 12.038952197181061,
+    "validation_top2": {
+      "threshold": 0.6900000000000001,
+      "auroc": 0.6488888888888888,
+      "auprc": 0.8838635080760416,
+      "f1": 0.9333333333333333,
+      "precision_ng": 0.9333333333333333,
+      "recall_ng": 0.9333333333333333,
+      "specificity_ok": 0.6,
+      "false_positive_rate_ok": 0.4,
+      "balanced_accuracy": 0.7666666666666666,
+      "confusion": {
+        "tn": 9,
+        "fp": 6,
+        "fn": 6,
+        "tp": 84
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 0.8666666666666667,
+        "open_circuit": 0.8666666666666667,
+        "short": 1.0,
+        "spur": 0.8666666666666667,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    }
+  },
+  {
+    "epoch": 7,
+    "train_loss": 1.1159576281905175,
+    "epoch_seconds": 11.883757618023083
+  },
+  {
+    "epoch": 8,
+    "train_loss": 1.1216791719198227,
+    "epoch_seconds": 12.300800429889932
+  },
+  {
+    "epoch": 9,
+    "train_loss": 1.1093022316694259,
+    "epoch_seconds": 12.061714181909338,
+    "validation_top2": {
+      "threshold": 0.6586613059043884,
+      "auroc": 0.6696296296296296,
+      "auprc": 0.8867053446282072,
+      "f1": 0.9473684210526315,
+      "precision_ng": 0.9,
+      "recall_ng": 1.0,
+      "specificity_ok": 0.3333333333333333,
+      "false_positive_rate_ok": 0.6666666666666666,
+      "balanced_accuracy": 0.6666666666666666,
+      "confusion": {
+        "tn": 5,
+        "fp": 10,
+        "fn": 0,
+        "tp": 90
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    }
+  },
+  {
+    "epoch": 10,
+    "train_loss": 1.090470442175865,
+    "epoch_seconds": 11.923014686908573
+  },
+  {
+    "epoch": 11,
+    "train_loss": 1.06442861109972,
+    "epoch_seconds": 12.841089518042281
+  },
+  {
+    "epoch": 12,
+    "train_loss": 1.0594371408224106,
+    "epoch_seconds": 12.151212064083666,
+    "validation_top2": {
+      "threshold": 0.5680061280727386,
+      "auroc": 0.6799999999999999,
+      "auprc": 0.8881891201300026,
+      "f1": 0.967741935483871,
+      "precision_ng": 0.9375,
+      "recall_ng": 1.0,
+      "specificity_ok": 0.6,
+      "false_positive_rate_ok": 0.4,
+      "balanced_accuracy": 0.8,
+      "confusion": {
+        "tn": 9,
+        "fp": 6,
+        "fn": 0,
+        "tp": 90
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    }
+  }
+]

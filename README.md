@@ -17,6 +17,8 @@ S01–S09 have been executed. The leading deployment candidate is **CPG-SSN with
 
 This is a closed-dataset feasibility result, not a production claim: all available real images are NG and validation/test OK images are synthetic. Real production OK images are required for threshold calibration and final blind testing. See the [complete S01–S09 report](artifacts/S01-S09/REPORT.md) and [machine-readable summary](artifacts/S01-S09/summary.csv).
 
+The incremental-learning validation is also complete: H01–H06 add the six defect types sequentially, and V10–V100 increase training data from 8 to 80 images per class. See the [iterative training report](artifacts/iterative_training/REPORT.md), [stage summary](artifacts/iterative_training/iterative/iterative_summary_seed_20260910.csv), and [forgetting analysis](artifacts/iterative_training/iterative/forgetting_seed_20260910.csv).
+
 ## Reproduce
 
 ```bash

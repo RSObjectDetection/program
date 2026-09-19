@@ -1,0 +1,32 @@
+{
+  "seed": 20260910,
+  "class_order": [
+    "missing_hole",
+    "mouse_bite",
+    "open_circuit",
+    "short",
+    "spur",
+    "spurious_copper"
+  ],
+  "percentages": [
+    10,
+    20,
+    30,
+    40,
+    50,
+    60,
+    70,
+    80,
+    90,
+    100
+  ],
+  "train_groups": 80,
+  "tracks": [
+    "horizontal",
+    "vertical"
+  ],
+  "epochs_per_stage": 12,
+  "max_train_samples_per_epoch": 2000,
+  "incremental_learning_rate_scale": 0.5,
+  "normal_policy": "training-split synthetic OK only; validation and test are never used"
+}

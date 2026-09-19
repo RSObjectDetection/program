@@ -1,0 +1,178 @@
+{
+  "name": "horizontal_H02_mouse_bite_seed20260910",
+  "backbone": "resnet18",
+  "image_size": 256,
+  "prototype": true,
+  "prototype_count": 417,
+  "glass": true,
+  "glass_steps": 1,
+  "shots_per_class": 0,
+  "include_classes": [
+    "missing_hole",
+    "mouse_bite"
+  ],
+  "initial_weights": "/root/program_runs/iterative/horizontal/seed_20260910/H01_missing_hole/weights.pt",
+  "learning_rate_scale": 0.5,
+  "train_tile_counts": {
+    "0": 3398,
+    "1": 1203
+  },
+  "train_tile_counts_by_class": {
+    "ok": 3398,
+    "missing_hole": 599,
+    "mouse_bite": 604
+  },
+  "image_counts": {
+    "train": 240,
+    "val": 45,
+    "test": 60
+  },
+  "epoch_samples": 2000,
+  "epochs_completed": 12,
+  "training_seconds": 482.86866107722744,
+  "validation": {
+    "max": {
+      "threshold": 0.72,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "f1": 1.0,
+      "precision_ng": 1.0,
+      "recall_ng": 1.0,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 1.0,
+      "confusion": {
+        "tn": 15,
+        "fp": 0,
+        "fn": 0,
+        "tp": 30
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0
+      },
+      "images": 45
+    },
+    "top2": {
+      "threshold": 0.6900000000000001,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "f1": 1.0,
+      "precision_ng": 1.0,
+      "recall_ng": 1.0,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 1.0,
+      "confusion": {
+        "tn": 15,
+        "fp": 0,
+        "fn": 0,
+        "tp": 30
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0
+      },
+      "images": 45
+    },
+    "top3": {
+      "threshold": 0.67,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "f1": 1.0,
+      "precision_ng": 1.0,
+      "recall_ng": 1.0,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 1.0,
+      "confusion": {
+        "tn": 15,
+        "fp": 0,
+        "fn": 0,
+        "tp": 30
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0
+      },
+      "images": 45
+    }
+  },
+  "test": {
+    "max": {
+      "threshold": 0.72,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "f1": 0.9743589743589743,
+      "precision_ng": 1.0,
+      "recall_ng": 0.95,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 0.975,
+      "confusion": {
+        "tn": 20,
+        "fp": 0,
+        "fn": 2,
+        "tp": 38
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 0.9
+      },
+      "images": 60
+    },
+    "top2": {
+      "threshold": 0.6900000000000001,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "f1": 0.9873417721518988,
+      "precision_ng": 1.0,
+      "recall_ng": 0.975,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 0.9875,
+      "confusion": {
+        "tn": 20,
+        "fp": 0,
+        "fn": 1,
+        "tp": 39
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 0.95
+      },
+      "images": 60
+    },
+    "top3": {
+      "threshold": 0.67,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "f1": 0.9873417721518988,
+      "precision_ng": 1.0,
+      "recall_ng": 0.975,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 0.9875,
+      "confusion": {
+        "tn": 20,
+        "fp": 0,
+        "fn": 1,
+        "tp": 39
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 0.95
+      },
+      "images": 60
+    }
+  },
+  "selected_aggregation": "top2",
+  "latency_mean_ms_per_tile": 1.3758723223872948,
+  "latency_p95_ms_per_tile": 1.4423062581045087,
+  "parameter_count": 4563783,
+  "torch_version": "2.11.0+cu128",
+  "cuda_version": "12.8",
+  "device": "NVIDIA GeForce RTX 5080",
+  "peak_gpu_memory_mb": 3019.55419921875,
+  "normal_data_warning": "OK validation/test images are synthetic; real-OK calibration is pending"
+}

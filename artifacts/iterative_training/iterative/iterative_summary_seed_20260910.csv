@@ -1,0 +1,17 @@
+track,stage,seed,shots_per_class,classes,threshold,auroc,auprc,f1,balanced_accuracy,recall_ng,specificity_ok,tn,fp,fn,tp,recall_missing_hole,recall_mouse_bite,recall_open_circuit,recall_short,recall_spur,recall_spurious_copper
+horizontal,H01_missing_hole,20260910,0,missing_hole,0.6900000000000001,1.0,1.0000000000000002,1.0,1.0,1.0,1.0,20,0,0,20,1.0,,,,,
+horizontal,H02_mouse_bite,20260910,0,missing_hole;mouse_bite,0.6900000000000001,1.0,1.0,0.9873417721518988,0.9875,0.975,1.0,20,0,1,39,1.0,0.95,,,,
+horizontal,H03_open_circuit,20260910,0,missing_hole;mouse_bite;open_circuit,0.56,1.0,1.0,0.9915966386554622,0.9916666666666667,0.9833333333333333,1.0,20,0,1,59,1.0,0.95,1.0,,,
+horizontal,H04_short,20260910,0,missing_hole;mouse_bite;open_circuit;short,0.6,0.9968750000000001,0.9992647058823529,0.9937106918238994,0.99375,0.9875,1.0,20,0,1,79,1.0,0.95,1.0,1.0,,
+horizontal,H05_spur,20260910,0,missing_hole;mouse_bite;open_circuit;short;spur,0.6,0.998,0.9996087378640777,0.98989898989899,0.99,0.98,1.0,20,0,2,98,1.0,1.0,1.0,1.0,0.9,
+horizontal,H06_spurious_copper,20260910,0,missing_hole;mouse_bite;open_circuit;short;spur;spurious_copper,0.5800000000000001,1.0,0.9999999999999998,0.9915966386554622,0.9916666666666667,0.9833333333333333,1.0,20,0,2,118,1.0,1.0,1.0,1.0,0.9,1.0
+vertical,V010,20260910,8,missing_hole;mouse_bite;open_circuit;short;spur;spurious_copper,0.5680061280727386,0.6245833333333333,0.8771998269463883,0.9558232931726908,0.7458333333333333,0.9916666666666667,0.5,10,10,1,119,1.0,1.0,1.0,1.0,0.95,1.0
+vertical,V020,20260910,16,missing_hole;mouse_bite;open_circuit;short;spur;spurious_copper,0.6710359752178192,0.8200000000000001,0.9223056882386096,0.9836065573770492,0.9,1.0,0.8,16,4,0,120,1.0,1.0,1.0,1.0,1.0,1.0
+vertical,V030,20260910,24,missing_hole;mouse_bite;open_circuit;short;spur;spurious_copper,0.6463385820388794,0.86125,0.9348689073711067,0.9876543209876543,0.925,1.0,0.85,17,3,0,120,1.0,1.0,1.0,1.0,1.0,1.0
+vertical,V040,20260910,32,missing_hole;mouse_bite;open_circuit;short;spur;spurious_copper,0.61,0.9991666666666666,0.9998616850321395,0.9916666666666667,0.9708333333333333,0.9916666666666667,0.95,19,1,1,119,1.0,1.0,1.0,1.0,0.95,1.0
+vertical,V050,20260910,40,missing_hole;mouse_bite;open_circuit;short;spur;spurious_copper,0.5888026058673859,1.0,1.0,1.0,1.0,1.0,1.0,20,0,0,120,1.0,1.0,1.0,1.0,1.0,1.0
+vertical,V060,20260910,48,missing_hole;mouse_bite;open_circuit;short;spur;spurious_copper,0.6223763823509216,1.0,0.9999999999999998,1.0,1.0,1.0,1.0,20,0,0,120,1.0,1.0,1.0,1.0,1.0,1.0
+vertical,V070,20260910,56,missing_hole;mouse_bite;open_circuit;short;spur;spurious_copper,0.6303081214427948,1.0,0.9999999999999998,1.0,1.0,1.0,1.0,20,0,0,120,1.0,1.0,1.0,1.0,1.0,1.0
+vertical,V080,20260910,64,missing_hole;mouse_bite;open_circuit;short;spur;spurious_copper,0.56,0.9995833333333333,0.9999311294765839,0.99581589958159,0.9958333333333333,0.9916666666666667,1.0,20,0,1,119,1.0,1.0,1.0,1.0,0.95,1.0
+vertical,V090,20260910,72,missing_hole;mouse_bite;open_circuit;short;spur;spurious_copper,0.6,1.0,1.0,1.0,1.0,1.0,1.0,20,0,0,120,1.0,1.0,1.0,1.0,1.0,1.0
+vertical,V100,20260910,80,missing_hole;mouse_bite;open_circuit;short;spur;spurious_copper,0.55,1.0,1.0,0.99581589958159,0.9958333333333333,0.9916666666666667,1.0,20,0,1,119,1.0,1.0,1.0,1.0,0.95,1.0

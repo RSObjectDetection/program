@@ -1,0 +1,216 @@
+/root/chip_env/lib/python3.11/site-packages/torch/functional.py:505: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /pytorch/aten/src/ATen/native/TensorShape.cpp:4381.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+{"epoch": 3, "train_loss": 1.0758976340293884, "epoch_seconds": 21.871084741083905, "validation_top2": {"threshold": 0.6710359752178192, "auroc": 0.9355555555555556, "auprc": 0.9626906074652973, "f1": 0.994475138121547, "precision_ng": 0.989010989010989, "recall_ng": 1.0, "specificity_ok": 0.9333333333333333, "false_positive_rate_ok": 0.06666666666666667, "balanced_accuracy": 0.9666666666666667, "confusion": {"tn": 14, "fp": 1, "fn": 0, "tp": 90}, "per_defect_recall": {"missing_hole": 1.0, "mouse_bite": 1.0, "open_circuit": 1.0, "short": 1.0, "spur": 1.0, "spurious_copper": 1.0}, "images": 105}}
+{"epoch": 6, "train_loss": 1.0737570553291134, "epoch_seconds": 20.141893729101866, "validation_top2": {"threshold": 0.65, "auroc": 0.925925925925926, "auprc": 0.9612189497138778, "f1": 0.9832402234636871, "precision_ng": 0.9887640449438202, "recall_ng": 0.9777777777777777, "specificity_ok": 0.9333333333333333, "false_positive_rate_ok": 0.06666666666666667, "balanced_accuracy": 0.9555555555555555, "confusion": {"tn": 14, "fp": 1, "fn": 2, "tp": 88}, "per_defect_recall": {"missing_hole": 1.0, "mouse_bite": 0.9333333333333333, "open_circuit": 1.0, "short": 1.0, "spur": 0.9333333333333333, "spurious_copper": 1.0}, "images": 105}}
+{"epoch": 9, "train_loss": 1.0622480359019302, "epoch_seconds": 23.370189742185175, "validation_top2": {"threshold": 0.6586976945400238, "auroc": 0.9355555555555556, "auprc": 0.9626906074652973, "f1": 0.994475138121547, "precision_ng": 0.989010989010989, "recall_ng": 1.0, "specificity_ok": 0.9333333333333333, "false_positive_rate_ok": 0.06666666666666667, "balanced_accuracy": 0.9666666666666667, "confusion": {"tn": 14, "fp": 1, "fn": 0, "tp": 90}, "per_defect_recall": {"missing_hole": 1.0, "mouse_bite": 1.0, "open_circuit": 1.0, "short": 1.0, "spur": 1.0, "spurious_copper": 1.0}, "images": 105}}
+{"epoch": 12, "train_loss": 1.040900890420123, "epoch_seconds": 21.59236493310891, "validation_top2": {"threshold": 0.5447214245796204, "auroc": 0.9355555555555556, "auprc": 0.9626906074652973, "f1": 0.994475138121547, "precision_ng": 0.989010989010989, "recall_ng": 1.0, "specificity_ok": 0.9333333333333333, "false_positive_rate_ok": 0.06666666666666667, "balanced_accuracy": 0.9666666666666667, "confusion": {"tn": 14, "fp": 1, "fn": 0, "tp": 90}, "per_defect_recall": {"missing_hole": 1.0, "mouse_bite": 1.0, "open_circuit": 1.0, "short": 1.0, "spur": 1.0, "spurious_copper": 1.0}, "images": 105}}
+{
+  "name": "vertical_V020_seed20260910",
+  "backbone": "resnet18",
+  "image_size": 256,
+  "prototype": true,
+  "prototype_count": 338,
+  "glass": true,
+  "glass_steps": 1,
+  "shots_per_class": 16,
+  "include_classes": [
+    "missing_hole",
+    "mouse_bite",
+    "open_circuit",
+    "short",
+    "spur",
+    "spurious_copper"
+  ],
+  "initial_weights": "/root/program_runs/iterative/vertical/seed_20260910/V010/weights.pt",
+  "learning_rate_scale": 0.5,
+  "train_tile_counts": {
+    "0": 614,
+    "1": 661
+  },
+  "train_tile_counts_by_class": {
+    "ok": 614,
+    "missing_hole": 107,
+    "mouse_bite": 110,
+    "open_circuit": 103,
+    "short": 115,
+    "spur": 107,
+    "spurious_copper": 119
+  },
+  "image_counts": {
+    "train": 112,
+    "val": 105,
+    "test": 140
+  },
+  "epoch_samples": 1322,
+  "epochs_completed": 12,
+  "training_seconds": 251.35805497970432,
+  "validation": {
+    "max": {
+      "threshold": 0.6866798996925354,
+      "auroc": 0.9355555555555555,
+      "auprc": 0.9626919641333206,
+      "f1": 0.994475138121547,
+      "precision_ng": 0.989010989010989,
+      "recall_ng": 1.0,
+      "specificity_ok": 0.9333333333333333,
+      "false_positive_rate_ok": 0.06666666666666667,
+      "balanced_accuracy": 0.9666666666666667,
+      "confusion": {
+        "tn": 14,
+        "fp": 1,
+        "fn": 0,
+        "tp": 90
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    },
+    "top2": {
+      "threshold": 0.6710359752178192,
+      "auroc": 0.9355555555555556,
+      "auprc": 0.9626906074652973,
+      "f1": 0.994475138121547,
+      "precision_ng": 0.989010989010989,
+      "recall_ng": 1.0,
+      "specificity_ok": 0.9333333333333333,
+      "false_positive_rate_ok": 0.06666666666666667,
+      "balanced_accuracy": 0.9666666666666667,
+      "confusion": {
+        "tn": 14,
+        "fp": 1,
+        "fn": 0,
+        "tp": 90
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    },
+    "top3": {
+      "threshold": 0.6489368677139282,
+      "auroc": 0.9355555555555556,
+      "auprc": 0.9626906074652973,
+      "f1": 0.994475138121547,
+      "precision_ng": 0.989010989010989,
+      "recall_ng": 1.0,
+      "specificity_ok": 0.9333333333333333,
+      "false_positive_rate_ok": 0.06666666666666667,
+      "balanced_accuracy": 0.9666666666666667,
+      "confusion": {
+        "tn": 14,
+        "fp": 1,
+        "fn": 0,
+        "tp": 90
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 105
+    }
+  },
+  "test": {
+    "max": {
+      "threshold": 0.6866798996925354,
+      "auroc": 0.8200000000000001,
+      "auprc": 0.9223306517505316,
+      "f1": 0.9836065573770492,
+      "precision_ng": 0.967741935483871,
+      "recall_ng": 1.0,
+      "specificity_ok": 0.8,
+      "false_positive_rate_ok": 0.2,
+      "balanced_accuracy": 0.9,
+      "confusion": {
+        "tn": 16,
+        "fp": 4,
+        "fn": 0,
+        "tp": 120
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 140
+    },
+    "top2": {
+      "threshold": 0.6710359752178192,
+      "auroc": 0.8200000000000001,
+      "auprc": 0.9223056882386096,
+      "f1": 0.9836065573770492,
+      "precision_ng": 0.967741935483871,
+      "recall_ng": 1.0,
+      "specificity_ok": 0.8,
+      "false_positive_rate_ok": 0.2,
+      "balanced_accuracy": 0.9,
+      "confusion": {
+        "tn": 16,
+        "fp": 4,
+        "fn": 0,
+        "tp": 120
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 140
+    },
+    "top3": {
+      "threshold": 0.6489368677139282,
+      "auroc": 0.8200000000000001,
+      "auprc": 0.9222879139863034,
+      "f1": 0.9836065573770492,
+      "precision_ng": 0.967741935483871,
+      "recall_ng": 1.0,
+      "specificity_ok": 0.8,
+      "false_positive_rate_ok": 0.2,
+      "balanced_accuracy": 0.9,
+      "confusion": {
+        "tn": 16,
+        "fp": 4,
+        "fn": 0,
+        "tp": 120
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0,
+        "spur": 1.0,
+        "spurious_copper": 1.0
+      },
+      "images": 140
+    }
+  },
+  "selected_aggregation": "top2",
+  "latency_mean_ms_per_tile": 1.3577821948274504,
+  "latency_p95_ms_per_tile": 1.4197831151250284,
+  "parameter_count": 4563783,
+  "torch_version": "2.11.0+cu128",
+  "cuda_version": "12.8",
+  "device": "NVIDIA GeForce RTX 5080",
+  "peak_gpu_memory_mb": 3019.55419921875,
+  "normal_data_warning": "OK validation/test images are synthetic; real-OK calibration is pending"
+}

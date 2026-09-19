@@ -10,6 +10,7 @@ artifacts/anomaly_baselines/ssn_smoke/
 
 # Python
 __pycache__/
+.ipynb_checkpoints/
 *.py[cod]
 .venv/
 
