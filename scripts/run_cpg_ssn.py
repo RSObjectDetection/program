@@ -48,6 +48,33 @@ def parse_args() -> argparse.Namespace:
         help="Defect classes retained in train/validation/test; OK images are always retained.",
     )
     parser.add_argument(
+        "--train-classes",
+        nargs="+",
+        help="Defect classes used for gradient training. Overrides --include-classes for train.",
+    )
+    parser.add_argument(
+        "--eval-classes",
+        nargs="+",
+        help="Defect classes retained in validation/test. Overrides --include-classes for evaluation.",
+    )
+    parser.add_argument(
+        "--train-rank-start",
+        type=int,
+        default=1,
+        help="First inclusive train_rank retained for NG training rows.",
+    )
+    parser.add_argument(
+        "--train-rank-end",
+        type=int,
+        default=0,
+        help="Last inclusive train_rank retained for NG training rows; 0 keeps all remaining ranks.",
+    )
+    parser.add_argument(
+        "--fixed-ok-train",
+        action="store_true",
+        help="Keep every training-split OK row while rank filtering only the NG rows.",
+    )
+    parser.add_argument(
         "--initial-weights",
         type=Path,
         help="Previous-stage weights used to initialize an incremental training stage.",
@@ -71,19 +98,47 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def read_rows(path: Path, shots: int, include_classes=None) -> dict[str, list[dict]]:
+def read_rows(
+    path: Path,
+    shots: int,
+    include_classes=None,
+    train_classes=None,
+    eval_classes=None,
+    train_rank_start: int = 1,
+    train_rank_end: int = 0,
+    fixed_ok_train: bool = False,
+) -> dict[str, list[dict]]:
     splits = {"train": [], "val": [], "test": []}
-    allowed = None if include_classes is None else set(include_classes)
+    shared_allowed = None if include_classes is None else set(include_classes)
+    train_allowed = shared_allowed if train_classes is None else set(train_classes)
+    eval_allowed = shared_allowed if eval_classes is None else set(eval_classes)
+    if train_rank_start < 1:
+        raise ValueError("train-rank-start must be at least 1")
+    if train_rank_end and train_rank_end < train_rank_start:
+        raise ValueError("train-rank-end must be zero or >= train-rank-start")
+    effective_end = train_rank_end or shots
     with path.open(newline="", encoding="utf-8") as handle:
         for row in csv.DictReader(handle):
             row["label"] = int(row["label"])
             row["train_rank"] = int(row["train_rank"])
             for key in ("x", "y", "w", "h", "contains_defect", "synthetic_ok"):
                 row[key] = int(row[key])
-            if row["split"] == "train" and shots > 0 and row["train_rank"] > shots:
-                continue
-            if row["label"] == 1 and allowed is not None and row["source_class"] not in allowed:
-                continue
+            if row["split"] == "train":
+                if row["label"] == 1:
+                    if train_allowed is not None and row["source_class"] not in train_allowed:
+                        continue
+                    if row["train_rank"] < train_rank_start:
+                        continue
+                    if effective_end > 0 and row["train_rank"] > effective_end:
+                        continue
+                elif not fixed_ok_train:
+                    if row["train_rank"] < train_rank_start:
+                        continue
+                    if effective_end > 0 and row["train_rank"] > effective_end:
+                        continue
+            elif row["label"] == 1 and eval_allowed is not None:
+                if row["source_class"] not in eval_allowed:
+                    continue
             splits[row["split"]].append(row)
     return splits
 
@@ -481,16 +536,26 @@ def main() -> None:
 
     if args.learning_rate_scale <= 0:
         raise ValueError("learning-rate-scale must be positive")
-    rows = read_rows(args.manifest, args.shots_per_class, args.include_classes)
+    rows = read_rows(
+        args.manifest,
+        args.shots_per_class,
+        args.include_classes,
+        args.train_classes,
+        args.eval_classes,
+        args.train_rank_start,
+        args.train_rank_end,
+        args.fixed_ok_train,
+    )
     if not rows["train"] or not rows["val"] or not rows["test"]:
         raise ValueError("Manifest must contain non-empty train, val and test splits")
-    if args.include_classes:
+    requested_train_classes = args.train_classes or args.include_classes
+    if requested_train_classes:
         available = {
             row["source_class"] for row in rows["train"] if row["label"] == 1
         }
-        missing = set(args.include_classes) - available
+        missing = set(requested_train_classes) - available
         if missing:
-            raise ValueError(f"Unknown or empty included defect classes: {sorted(missing)}")
+            raise ValueError(f"Unknown or empty training defect classes: {sorted(missing)}")
     config = {
         "backbone": args.backbone,
         "layers": ["layer2", "layer3"],
@@ -530,6 +595,9 @@ def main() -> None:
         "ok" if row["label"] == 0 else row["source_class"] for row in rows["train"]
     )
     defect_classes = sorted(name for name in class_counts if name != "ok")
+    evaluated_defect_classes = sorted(
+        {row["source_class"] for row in rows["test"] if row["label"] == 1}
+    )
     weights = []
     for row in rows["train"]:
         if row["label"] == 0:
@@ -676,7 +744,12 @@ def main() -> None:
         "glass": args.glass,
         "glass_steps": args.glass_steps if args.glass else 0,
         "shots_per_class": args.shots_per_class,
-        "include_classes": defect_classes,
+        "include_classes": evaluated_defect_classes,
+        "train_classes": defect_classes,
+        "eval_classes": evaluated_defect_classes,
+        "train_rank_start": args.train_rank_start,
+        "train_rank_end": args.train_rank_end or args.shots_per_class or 0,
+        "fixed_ok_train": args.fixed_ok_train,
         "initial_weights": None if args.initial_weights is None else str(args.initial_weights),
         "learning_rate_scale": args.learning_rate_scale,
         "train_tile_counts": dict(counts),
