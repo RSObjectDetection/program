@@ -19,6 +19,8 @@ This is a closed-dataset feasibility result, not a production claim: all availab
 
 The incremental-learning validation is also complete: H01–H06 add the six defect types sequentially, and V10–V100 increase training data from 8 to 80 images per class. See the [iterative training report](artifacts/iterative_training/REPORT.md), [stage summary](artifacts/iterative_training/iterative/iterative_summary_seed_20260910.csv), and [forgetting analysis](artifacts/iterative_training/iterative/forgetting_seed_20260910.csv).
 
+A second incremental study uses a **strict no-replay protocol**: each stage inherits the previous weights but trains only on the newly introduced NG images plus the same 80 synthetic OK references. All H01–H06 and V10–V100 stages are complete. See the [strict no-replay report](artifacts/iterative_no_replay/REPORT.md), [16-stage summary](artifacts/iterative_no_replay/iterative_no_replay/no_replay_summary_seed_20260910.csv), and [source-overlap audit](artifacts/iterative_no_replay/iterative_no_replay/no_replay_audit.json).
+
 ## Reproduce
 
 ```bash

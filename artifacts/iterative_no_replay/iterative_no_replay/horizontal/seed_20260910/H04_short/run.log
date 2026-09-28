@@ -1,0 +1,209 @@
+/root/chip_env/lib/python3.11/site-packages/torch/functional.py:505: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /pytorch/aten/src/ATen/native/TensorShape.cpp:4381.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+{"epoch": 3, "train_loss": 1.0532198162078859, "epoch_seconds": 27.452151864999905, "validation_top2": {"threshold": 0.62, "auroc": 1.0, "auprc": 1.0, "f1": 1.0, "precision_ng": 1.0, "recall_ng": 1.0, "specificity_ok": 1.0, "false_positive_rate_ok": 0.0, "balanced_accuracy": 1.0, "confusion": {"tn": 15, "fp": 0, "fn": 0, "tp": 60}, "per_defect_recall": {"missing_hole": 1.0, "mouse_bite": 1.0, "open_circuit": 1.0, "short": 1.0}, "images": 75}}
+{"epoch": 6, "train_loss": 1.0572728152275086, "epoch_seconds": 26.311316878069192, "validation_top2": {"threshold": 0.63, "auroc": 1.0, "auprc": 1.0, "f1": 1.0, "precision_ng": 1.0, "recall_ng": 1.0, "specificity_ok": 1.0, "false_positive_rate_ok": 0.0, "balanced_accuracy": 1.0, "confusion": {"tn": 15, "fp": 0, "fn": 0, "tp": 60}, "per_defect_recall": {"missing_hole": 1.0, "mouse_bite": 1.0, "open_circuit": 1.0, "short": 1.0}, "images": 75}}
+{"epoch": 9, "train_loss": 1.053662926673889, "epoch_seconds": 27.27175404620357, "validation_top2": {"threshold": 0.64, "auroc": 0.9944444444444445, "auprc": 0.9987179487179488, "f1": 0.9915966386554622, "precision_ng": 1.0, "recall_ng": 0.9833333333333333, "specificity_ok": 1.0, "false_positive_rate_ok": 0.0, "balanced_accuracy": 0.9916666666666667, "confusion": {"tn": 15, "fp": 0, "fn": 1, "tp": 59}, "per_defect_recall": {"missing_hole": 1.0, "mouse_bite": 0.9333333333333333, "open_circuit": 1.0, "short": 1.0}, "images": 75}}
+{"epoch": 12, "train_loss": 1.038052320957184, "epoch_seconds": 27.173321446869522, "validation_top2": {"threshold": 0.5800000000000001, "auroc": 0.9955555555555555, "auprc": 0.9989583333333335, "f1": 0.9915966386554622, "precision_ng": 1.0, "recall_ng": 0.9833333333333333, "specificity_ok": 1.0, "false_positive_rate_ok": 0.0, "balanced_accuracy": 0.9916666666666667, "confusion": {"tn": 15, "fp": 0, "fn": 1, "tp": 59}, "per_defect_recall": {"missing_hole": 1.0, "mouse_bite": 0.9333333333333333, "open_circuit": 1.0, "short": 1.0}, "images": 75}}
+{
+  "name": "no_replay_horizontal_H04_short_seed20260910",
+  "backbone": "resnet18",
+  "image_size": 256,
+  "prototype": true,
+  "prototype_count": 417,
+  "glass": true,
+  "glass_steps": 1,
+  "shots_per_class": 0,
+  "include_classes": [
+    "missing_hole",
+    "mouse_bite",
+    "open_circuit",
+    "short"
+  ],
+  "train_classes": [
+    "short"
+  ],
+  "eval_classes": [
+    "missing_hole",
+    "mouse_bite",
+    "open_circuit",
+    "short"
+  ],
+  "train_rank_start": 1,
+  "train_rank_end": 80,
+  "fixed_ok_train": true,
+  "initial_weights": "/root/program_runs/iterative_no_replay/horizontal/seed_20260910/H03_open_circuit/weights.pt",
+  "learning_rate_scale": 0.5,
+  "train_tile_counts": {
+    "0": 3398,
+    "1": 612
+  },
+  "train_tile_counts_by_class": {
+    "ok": 3398,
+    "short": 612
+  },
+  "image_counts": {
+    "train": 160,
+    "val": 75,
+    "test": 100
+  },
+  "epoch_samples": 2000,
+  "epochs_completed": 12,
+  "training_seconds": 325.9386363751255,
+  "validation": {
+    "max": {
+      "threshold": 0.64,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "f1": 1.0,
+      "precision_ng": 1.0,
+      "recall_ng": 1.0,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 1.0,
+      "confusion": {
+        "tn": 15,
+        "fp": 0,
+        "fn": 0,
+        "tp": 60
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0
+      },
+      "images": 75
+    },
+    "top2": {
+      "threshold": 0.62,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "f1": 1.0,
+      "precision_ng": 1.0,
+      "recall_ng": 1.0,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 1.0,
+      "confusion": {
+        "tn": 15,
+        "fp": 0,
+        "fn": 0,
+        "tp": 60
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0
+      },
+      "images": 75
+    },
+    "top3": {
+      "threshold": 0.61,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "f1": 1.0,
+      "precision_ng": 1.0,
+      "recall_ng": 1.0,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 1.0,
+      "confusion": {
+        "tn": 15,
+        "fp": 0,
+        "fn": 0,
+        "tp": 60
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0
+      },
+      "images": 75
+    }
+  },
+  "test": {
+    "max": {
+      "threshold": 0.64,
+      "auroc": 0.99,
+      "auprc": 0.9977272727272724,
+      "f1": 0.9873417721518988,
+      "precision_ng": 1.0,
+      "recall_ng": 0.975,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 0.9875,
+      "confusion": {
+        "tn": 20,
+        "fp": 0,
+        "fn": 2,
+        "tp": 78
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 0.9,
+        "short": 1.0
+      },
+      "images": 100
+    },
+    "top2": {
+      "threshold": 0.62,
+      "auroc": 1.0,
+      "auprc": 0.9999999999999997,
+      "f1": 1.0,
+      "precision_ng": 1.0,
+      "recall_ng": 1.0,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 1.0,
+      "confusion": {
+        "tn": 20,
+        "fp": 0,
+        "fn": 0,
+        "tp": 80
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0
+      },
+      "images": 100
+    },
+    "top3": {
+      "threshold": 0.61,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "f1": 1.0,
+      "precision_ng": 1.0,
+      "recall_ng": 1.0,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 1.0,
+      "confusion": {
+        "tn": 20,
+        "fp": 0,
+        "fn": 0,
+        "tp": 80
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0,
+        "open_circuit": 1.0,
+        "short": 1.0
+      },
+      "images": 100
+    }
+  },
+  "selected_aggregation": "top2",
+  "latency_mean_ms_per_tile": 1.3210957993578631,
+  "latency_p95_ms_per_tile": 1.3282804771733936,
+  "parameter_count": 4563783,
+  "torch_version": "2.11.0+cu128",
+  "cuda_version": "12.8",
+  "device": "NVIDIA GeForce RTX 5080",
+  "peak_gpu_memory_mb": 3019.55419921875,
+  "normal_data_warning": "OK validation/test images are synthetic; real-OK calibration is pending"
+}

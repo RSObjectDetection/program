@@ -1,0 +1,201 @@
+{
+  "name": "no_replay_horizontal_H02_mouse_bite_seed20260910",
+  "backbone": "resnet18",
+  "image_size": 256,
+  "prototype": true,
+  "prototype_count": 417,
+  "glass": true,
+  "glass_steps": 1,
+  "shots_per_class": 0,
+  "include_classes": [
+    "missing_hole",
+    "mouse_bite"
+  ],
+  "train_classes": [
+    "mouse_bite"
+  ],
+  "eval_classes": [
+    "missing_hole",
+    "mouse_bite"
+  ],
+  "train_rank_start": 1,
+  "train_rank_end": 80,
+  "fixed_ok_train": true,
+  "initial_weights": "/root/program_runs/iterative_no_replay/horizontal/seed_20260910/H01_missing_hole/weights.pt",
+  "learning_rate_scale": 0.5,
+  "train_tile_counts": {
+    "0": 3398,
+    "1": 604
+  },
+  "train_tile_counts_by_class": {
+    "ok": 3398,
+    "mouse_bite": 604
+  },
+  "image_counts": {
+    "train": 160,
+    "val": 45,
+    "test": 60
+  },
+  "epoch_samples": 2000,
+  "epochs_completed": 12,
+  "training_seconds": 324.5260227981489,
+  "validation": {
+    "max": {
+      "threshold": 0.65,
+      "auroc": 0.9955555555555555,
+      "auprc": 0.9979166666666666,
+      "f1": 0.9830508474576272,
+      "precision_ng": 1.0,
+      "recall_ng": 0.9666666666666667,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 0.9833333333333334,
+      "confusion": {
+        "tn": 15,
+        "fp": 0,
+        "fn": 1,
+        "tp": 29
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 0.9333333333333333
+      },
+      "images": 45
+    },
+    "top2": {
+      "threshold": 0.62,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "f1": 1.0,
+      "precision_ng": 1.0,
+      "recall_ng": 1.0,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 1.0,
+      "confusion": {
+        "tn": 15,
+        "fp": 0,
+        "fn": 0,
+        "tp": 30
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0
+      },
+      "images": 45
+    },
+    "top3": {
+      "threshold": 0.61,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "f1": 1.0,
+      "precision_ng": 1.0,
+      "recall_ng": 1.0,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 1.0,
+      "confusion": {
+        "tn": 15,
+        "fp": 0,
+        "fn": 0,
+        "tp": 30
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0
+      },
+      "images": 45
+    }
+  },
+  "test": {
+    "max": {
+      "threshold": 0.65,
+      "auroc": 0.99375,
+      "auprc": 0.9972222222222222,
+      "f1": 0.9873417721518988,
+      "precision_ng": 1.0,
+      "recall_ng": 0.975,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 0.9875,
+      "confusion": {
+        "tn": 20,
+        "fp": 0,
+        "fn": 1,
+        "tp": 39
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 0.95
+      },
+      "images": 60
+    },
+    "top2": {
+      "threshold": 0.62,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "f1": 1.0,
+      "precision_ng": 1.0,
+      "recall_ng": 1.0,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 1.0,
+      "confusion": {
+        "tn": 20,
+        "fp": 0,
+        "fn": 0,
+        "tp": 40
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0
+      },
+      "images": 60
+    },
+    "top3": {
+      "threshold": 0.61,
+      "auroc": 1.0,
+      "auprc": 1.0,
+      "f1": 1.0,
+      "precision_ng": 1.0,
+      "recall_ng": 1.0,
+      "specificity_ok": 1.0,
+      "false_positive_rate_ok": 0.0,
+      "balanced_accuracy": 1.0,
+      "confusion": {
+        "tn": 20,
+        "fp": 0,
+        "fn": 0,
+        "tp": 40
+      },
+      "per_defect_recall": {
+        "missing_hole": 1.0,
+        "mouse_bite": 1.0
+      },
+      "images": 60
+    }
+  },
+  "selected_aggregation": "top2",
+  "latency_mean_ms_per_tile": 1.3180087189539336,
+  "latency_p95_ms_per_tile": 1.3265339526697062,
+  "parameter_count": 4563783,
+  "torch_version": "2.11.0+cu128",
+  "cuda_version": "12.8",
+  "device": "NVIDIA GeForce RTX 5080",
+  "peak_gpu_memory_mb": 3404.55419921875,
+  "normal_data_warning": "OK validation/test images are synthetic; real-OK calibration is pending",
+  "continual_protocol": "strict_no_replay_ng",
+  "stage_metadata": {
+    "stage": "H02_mouse_bite",
+    "train_classes": [
+      "mouse_bite"
+    ],
+    "eval_classes": [
+      "missing_hole",
+      "mouse_bite"
+    ],
+    "new_ng_images": 80,
+    "new_ng_source_digest": "a7e9466f7823519df472f4af33deaec47d231c9862ba5ac7ea245f9a6ae336b9",
+    "historical_ng_overlap": 0
+  }
+}

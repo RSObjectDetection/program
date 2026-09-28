@@ -1,0 +1,33 @@
+START horizontal/H01_missing_hole: train=['missing_hole'], eval=['missing_hole'], ranks=1-80, previous=None
+DONE horizontal/H01_missing_hole in 7.4 min: F1=1.0000, recall=1.0000, specificity=1.0000, FP=0, FN=0
+START horizontal/H02_mouse_bite: train=['mouse_bite'], eval=['missing_hole', 'mouse_bite'], ranks=1-80, previous=/root/program_runs/iterative_no_replay/horizontal/seed_20260910/H01_missing_hole/weights.pt
+DONE horizontal/H02_mouse_bite in 8.0 min: F1=1.0000, recall=1.0000, specificity=1.0000, FP=0, FN=0
+START horizontal/H03_open_circuit: train=['open_circuit'], eval=['missing_hole', 'mouse_bite', 'open_circuit'], ranks=1-80, previous=/root/program_runs/iterative_no_replay/horizontal/seed_20260910/H02_mouse_bite/weights.pt
+DONE horizontal/H03_open_circuit in 8.6 min: F1=0.9916, recall=0.9833, specificity=1.0000, FP=0, FN=1
+START horizontal/H04_short: train=['short'], eval=['missing_hole', 'mouse_bite', 'open_circuit', 'short'], ranks=1-80, previous=/root/program_runs/iterative_no_replay/horizontal/seed_20260910/H03_open_circuit/weights.pt
+DONE horizontal/H04_short in 9.3 min: F1=1.0000, recall=1.0000, specificity=1.0000, FP=0, FN=0
+START horizontal/H05_spur: train=['spur'], eval=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur'], ranks=1-80, previous=/root/program_runs/iterative_no_replay/horizontal/seed_20260910/H04_short/weights.pt
+DONE horizontal/H05_spur in 13.8 min: F1=0.9950, recall=0.9900, specificity=1.0000, FP=0, FN=1
+START horizontal/H06_spurious_copper: train=['spurious_copper'], eval=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], ranks=1-80, previous=/root/program_runs/iterative_no_replay/horizontal/seed_20260910/H05_spur/weights.pt
+DONE horizontal/H06_spurious_copper in 17.9 min: F1=1.0000, recall=1.0000, specificity=1.0000, FP=0, FN=0
+START vertical/V010: train=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], eval=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], ranks=1-8, previous=None
+DONE vertical/V010 in 10.6 min: F1=0.9958, recall=0.9917, specificity=1.0000, FP=0, FN=1
+START vertical/V020: train=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], eval=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], ranks=9-16, previous=/root/program_runs/iterative_no_replay/vertical/seed_20260910/V010/weights.pt
+DONE vertical/V020 in 10.2 min: F1=1.0000, recall=1.0000, specificity=1.0000, FP=0, FN=0
+START vertical/V030: train=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], eval=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], ranks=17-24, previous=/root/program_runs/iterative_no_replay/vertical/seed_20260910/V020/weights.pt
+DONE vertical/V030 in 10.1 min: F1=1.0000, recall=1.0000, specificity=1.0000, FP=0, FN=0
+START vertical/V040: train=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], eval=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], ranks=25-32, previous=/root/program_runs/iterative_no_replay/vertical/seed_20260910/V030/weights.pt
+DONE vertical/V040 in 10.1 min: F1=1.0000, recall=1.0000, specificity=1.0000, FP=0, FN=0
+START vertical/V050: train=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], eval=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], ranks=33-40, previous=/root/program_runs/iterative_no_replay/vertical/seed_20260910/V040/weights.pt
+DONE vertical/V050 in 10.5 min: F1=0.9916, recall=0.9833, specificity=1.0000, FP=0, FN=2
+START vertical/V060: train=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], eval=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], ranks=41-48, previous=/root/program_runs/iterative_no_replay/vertical/seed_20260910/V050/weights.pt
+DONE vertical/V060 in 10.6 min: F1=1.0000, recall=1.0000, specificity=1.0000, FP=0, FN=0
+START vertical/V070: train=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], eval=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], ranks=49-56, previous=/root/program_runs/iterative_no_replay/vertical/seed_20260910/V060/weights.pt
+DONE vertical/V070 in 10.1 min: F1=0.9958, recall=0.9917, specificity=1.0000, FP=0, FN=1
+START vertical/V080: train=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], eval=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], ranks=57-64, previous=/root/program_runs/iterative_no_replay/vertical/seed_20260910/V070/weights.pt
+DONE vertical/V080 in 10.4 min: F1=0.9836, recall=1.0000, specificity=0.8000, FP=4, FN=0
+START vertical/V090: train=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], eval=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], ranks=65-72, previous=/root/program_runs/iterative_no_replay/vertical/seed_20260910/V080/weights.pt
+DONE vertical/V090 in 10.3 min: F1=1.0000, recall=1.0000, specificity=1.0000, FP=0, FN=0
+START vertical/V100: train=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], eval=['missing_hole', 'mouse_bite', 'open_circuit', 'short', 'spur', 'spurious_copper'], ranks=73-80, previous=/root/program_runs/iterative_no_replay/vertical/seed_20260910/V090/weights.pt
+DONE vertical/V100 in 10.7 min: F1=0.9916, recall=0.9833, specificity=1.0000, FP=0, FN=2
+All requested strict no-replay stages completed

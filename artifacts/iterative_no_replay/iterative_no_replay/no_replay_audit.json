@@ -1,0 +1,197 @@
+{
+  "protocol": "strict_no_replay_ng",
+  "fixed_ok_images": 80,
+  "fixed_ok_source_digest": "ead3c75d0b4156dd302246f2376af9c31dd6ede2981f022da3fa5159193e3e1a",
+  "horizontal": [
+    {
+      "stage": "H01_missing_hole",
+      "train_classes": [
+        "missing_hole"
+      ],
+      "eval_classes": [
+        "missing_hole"
+      ],
+      "new_ng_images": 80,
+      "new_ng_source_digest": "8b106063270c5697ce45feaa61e763648b19549ce70b6cdb11df59f9621a4f5f",
+      "historical_ng_overlap": 0
+    },
+    {
+      "stage": "H02_mouse_bite",
+      "train_classes": [
+        "mouse_bite"
+      ],
+      "eval_classes": [
+        "missing_hole",
+        "mouse_bite"
+      ],
+      "new_ng_images": 80,
+      "new_ng_source_digest": "a7e9466f7823519df472f4af33deaec47d231c9862ba5ac7ea245f9a6ae336b9",
+      "historical_ng_overlap": 0
+    },
+    {
+      "stage": "H03_open_circuit",
+      "train_classes": [
+        "open_circuit"
+      ],
+      "eval_classes": [
+        "missing_hole",
+        "mouse_bite",
+        "open_circuit"
+      ],
+      "new_ng_images": 80,
+      "new_ng_source_digest": "f35ece3341b80e5d9dff81b84356b7e9df02ce450a160cb084c8755ab83d3cab",
+      "historical_ng_overlap": 0
+    },
+    {
+      "stage": "H04_short",
+      "train_classes": [
+        "short"
+      ],
+      "eval_classes": [
+        "missing_hole",
+        "mouse_bite",
+        "open_circuit",
+        "short"
+      ],
+      "new_ng_images": 80,
+      "new_ng_source_digest": "b17c3df1eb5dc4a50d9cee77cbfb8f2d6a05deb03218e159d93462739b5791b4",
+      "historical_ng_overlap": 0
+    },
+    {
+      "stage": "H05_spur",
+      "train_classes": [
+        "spur"
+      ],
+      "eval_classes": [
+        "missing_hole",
+        "mouse_bite",
+        "open_circuit",
+        "short",
+        "spur"
+      ],
+      "new_ng_images": 80,
+      "new_ng_source_digest": "db79ac2671f1dba9f531111912bff04cf18a254a5f12313d56a80e4387d537f3",
+      "historical_ng_overlap": 0
+    },
+    {
+      "stage": "H06_spurious_copper",
+      "train_classes": [
+        "spurious_copper"
+      ],
+      "eval_classes": [
+        "missing_hole",
+        "mouse_bite",
+        "open_circuit",
+        "short",
+        "spur",
+        "spurious_copper"
+      ],
+      "new_ng_images": 80,
+      "new_ng_source_digest": "8689910190353c8338652002f246a77dc254a0afcf42964468235c13a200d6d5",
+      "historical_ng_overlap": 0
+    }
+  ],
+  "vertical": [
+    {
+      "stage": "V010",
+      "train_rank_start": 1,
+      "train_rank_end": 8,
+      "new_ng_images_per_class": 8,
+      "new_ng_images": 48,
+      "historical_ng_images_per_class": 8,
+      "new_ng_source_digest": "b9541781448dc2935ce5c4880d7bc22a2aec415d4c186c646fbb99e8fa89610c",
+      "historical_ng_overlap": 0
+    },
+    {
+      "stage": "V020",
+      "train_rank_start": 9,
+      "train_rank_end": 16,
+      "new_ng_images_per_class": 8,
+      "new_ng_images": 48,
+      "historical_ng_images_per_class": 16,
+      "new_ng_source_digest": "897ab172a675526949829e8cf9e7fb8d31f3040a3f15405de880f12681783c8f",
+      "historical_ng_overlap": 0
+    },
+    {
+      "stage": "V030",
+      "train_rank_start": 17,
+      "train_rank_end": 24,
+      "new_ng_images_per_class": 8,
+      "new_ng_images": 48,
+      "historical_ng_images_per_class": 24,
+      "new_ng_source_digest": "5d0812e85cddc6a4fdf328ecd36f9d9ec8c88bfffc533811e5ccec7072c56100",
+      "historical_ng_overlap": 0
+    },
+    {
+      "stage": "V040",
+      "train_rank_start": 25,
+      "train_rank_end": 32,
+      "new_ng_images_per_class": 8,
+      "new_ng_images": 48,
+      "historical_ng_images_per_class": 32,
+      "new_ng_source_digest": "70643f4918fcafa78f4798ed83b81469cba115eee83e313d9f2366669c37a35a",
+      "historical_ng_overlap": 0
+    },
+    {
+      "stage": "V050",
+      "train_rank_start": 33,
+      "train_rank_end": 40,
+      "new_ng_images_per_class": 8,
+      "new_ng_images": 48,
+      "historical_ng_images_per_class": 40,
+      "new_ng_source_digest": "2feac7a1137a8da0607557eed89a937dd17d4ca257eb6c9d4b8801fb1ba20d33",
+      "historical_ng_overlap": 0
+    },
+    {
+      "stage": "V060",
+      "train_rank_start": 41,
+      "train_rank_end": 48,
+      "new_ng_images_per_class": 8,
+      "new_ng_images": 48,
+      "historical_ng_images_per_class": 48,
+      "new_ng_source_digest": "b143ce23847d1afa71c6b5a764e3338e055445a09281adca6e6f97a78fe6c787",
+      "historical_ng_overlap": 0
+    },
+    {
+      "stage": "V070",
+      "train_rank_start": 49,
+      "train_rank_end": 56,
+      "new_ng_images_per_class": 8,
+      "new_ng_images": 48,
+      "historical_ng_images_per_class": 56,
+      "new_ng_source_digest": "77643c5fd7e0fdf07bc7c3cf76154eeab1f1921918f1472c24df2d8cc21e3c25",
+      "historical_ng_overlap": 0
+    },
+    {
+      "stage": "V080",
+      "train_rank_start": 57,
+      "train_rank_end": 64,
+      "new_ng_images_per_class": 8,
+      "new_ng_images": 48,
+      "historical_ng_images_per_class": 64,
+      "new_ng_source_digest": "12ef3364dc7df84c57d88bcb64eb85b1cec4d7203f62d379fe2289b42435a5d4",
+      "historical_ng_overlap": 0
+    },
+    {
+      "stage": "V090",
+      "train_rank_start": 65,
+      "train_rank_end": 72,
+      "new_ng_images_per_class": 8,
+      "new_ng_images": 48,
+      "historical_ng_images_per_class": 72,
+      "new_ng_source_digest": "ea15921a3439c739f00fbd28b16ae77881249ca73ab5ddbf4ac1ef7d11d7b355",
+      "historical_ng_overlap": 0
+    },
+    {
+      "stage": "V100",
+      "train_rank_start": 73,
+      "train_rank_end": 80,
+      "new_ng_images_per_class": 8,
+      "new_ng_images": 48,
+      "historical_ng_images_per_class": 80,
+      "new_ng_source_digest": "c1e898ab0664fa66c892ba3ae042aa008d127cbdee626e739467bb23155d8f28",
+      "historical_ng_overlap": 0
+    }
+  ],
+  "valid": true
+}

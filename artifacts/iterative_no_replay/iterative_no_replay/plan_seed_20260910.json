@@ -1,0 +1,26 @@
+{
+  "seed": 20260910,
+  "protocol": "strict_no_replay_ng",
+  "class_order": [
+    "missing_hole",
+    "mouse_bite",
+    "open_circuit",
+    "short",
+    "spur",
+    "spurious_copper"
+  ],
+  "tracks": [
+    "horizontal",
+    "vertical"
+  ],
+  "epochs_per_stage": 12,
+  "max_train_samples_per_epoch": 2000,
+  "incremental_learning_rate_scale": 0.5,
+  "backbone_initialization": "ImageNet-pretrained ResNet-18; frozen",
+  "stage_initialization": "previous stage trainable weights; S08 is not used",
+  "normal_policy": "all 80 train-split synthetic OK images are a fixed reference set",
+  "horizontal_policy": "only the newly introduced defect class is used for gradients",
+  "vertical_policy": "only the new disjoint 8-image chunk per defect class is used",
+  "validation_policy": "seen classes only for horizontal; all classes for vertical",
+  "test_policy": "seen classes only for horizontal; fixed full test for vertical"
+}
