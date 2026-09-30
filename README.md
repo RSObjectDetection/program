@@ -21,6 +21,8 @@ The incremental-learning validation is also complete: H01–H06 add the six defe
 
 A second incremental study uses a **strict no-replay protocol**: each stage inherits the previous weights but trains only on the newly introduced NG images plus the same 80 synthetic OK references. All H01–H06 and V10–V100 stages are complete. See the [strict no-replay report](artifacts/iterative_no_replay/REPORT.md), [16-stage summary](artifacts/iterative_no_replay/iterative_no_replay/no_replay_summary_seed_20260910.csv), and [source-overlap audit](artifacts/iterative_no_replay/iterative_no_replay/no_replay_audit.json).
 
+For server setup, parameter definitions, full experiment reproduction, resume behavior, and single-image or batch inference, follow the [CPG-SSN incremental training and inference operations manual](docs/OPERATIONS_CPG_SSN_INCREMENTAL.md).
+
 ## Reproduce
 
 ```bash
