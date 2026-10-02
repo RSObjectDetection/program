@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Collect lightweight S01-S09 artifacts while leaving model weights in /hy-tmp."""
+"""Collect lightweight S01-S09 artifacts while leaving weights under /root."""
 
 from __future__ import annotations
 
@@ -25,7 +25,11 @@ RUNS = {
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--runs-root", type=Path, default=Path("/hy-tmp/runs"))
+    parser.add_argument(
+        "--runs-root",
+        type=Path,
+        default=Path("/root/program_runs/s01_s09"),
+    )
     parser.add_argument("--output-root", type=Path, required=True)
     return parser.parse_args()
 
@@ -67,6 +71,14 @@ def main() -> None:
             writer = csv.DictWriter(handle, fieldnames=list(table[0]))
             writer.writeheader()
             writer.writerows(table)
+
+    calibration = args.runs_root / "S09_calibration"
+    if calibration.is_dir():
+        shutil.copytree(
+            calibration,
+            args.output_root / "S09_calibration",
+            dirs_exist_ok=True,
+        )
     print(json.dumps(table, indent=2))
 
 

@@ -80,6 +80,6 @@ Max 对单个偶发高分图块最敏感。Top-2 与 Top-3 在验证集并列，
 ## 结果位置
 
 - 服务器轻量归档：`/root/program/artifacts/S01-S09/`
-- 服务器权重与原始运行：`/hy-tmp/runs/`
+- 复现时的服务器权重与原始运行：`/root/program_runs/s01_s09/`
 - 汇总 CSV：`artifacts/S01-S09/summary.csv`
 - 各实验目录包含 `experiment_summary.json`、`history.json` 和验证/测试逐图预测 CSV；大权重未提交 GitHub。
